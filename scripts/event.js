@@ -15,6 +15,10 @@ const listOfSliderLabel = [
     "scale-label",
 ];
 
+// First -Third El for rotation, Fourth for scaling, Fifth-Sevent for translation 
+let transformArray = [0,0,0,0,0,0,0];
+
+// For slider (rotation and scaling) input
 document.querySelectorAll(".slider").forEach(function (el, index) {
     el.oninput = function () {
         var valPercent =
@@ -27,7 +31,28 @@ document.querySelectorAll(".slider").forEach(function (el, index) {
             valPercent +
             ", #f5f6f8));";
         el.style = style;
-        document.getElementById(listOfSliderLabel[index]).textContent = el.value;
+        transformArray[index] = parseInt(el.value);
+        console.log(transformArray);
+        document.getElementById(listOfSliderLabel[index]).textContent =
+            el.value;
+    };
+    el.oninput();
+});
+
+// For translation input
+document.querySelectorAll(".translate").forEach(function (el, index) {
+    el.oninput = function () {
+        let length = el.value.length;
+        if (parseInt(el.value)) {
+            console.log(parseInt(el.value))
+            transformArray[4+index] = parseInt(el.value);
+        }
+
+        if (!parseInt(el.value[length-1])) {
+            transformArray[4+index] = 0;
+        }
+        
+        console.log(transformArray);
     };
     el.oninput();
 });
