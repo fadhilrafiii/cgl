@@ -8,6 +8,30 @@ function getStarted() {
     window.location.href = "#help";
 }
 
+const listOfSliderLabel = [
+    "x-rotate-label",
+    "y-rotate-label",
+    "z-rotate-label",
+    "scale-label",
+];
+
+document.querySelectorAll(".slider").forEach(function (el, index) {
+    el.oninput = function () {
+        var valPercent =
+            (el.valueAsNumber - parseInt(el.min)) /
+            (parseInt(el.max) - parseInt(el.min));
+        var style =
+            "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
+            valPercent +
+            ", #ffa500), color-stop(" +
+            valPercent +
+            ", #f5f6f8));";
+        el.style = style;
+        document.getElementById(listOfSliderLabel[index]).textContent = el.value;
+    };
+    el.oninput();
+});
+
 var prevScrollpos = window.pageYOffset;
 window.onscroll = function () {
     var currentScrollPos = window.pageYOffset;
