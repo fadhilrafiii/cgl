@@ -32,12 +32,13 @@ document.querySelectorAll(".slider").forEach(function (el, index) {
             ", #f5f6f8));";
         el.style = style;
         transformArray[index] = parseInt(el.value);
-        console.log(transformArray);
         document.getElementById(listOfSliderLabel[index]).textContent =
             el.value;
     };
     el.oninput();
 });
+
+
 
 // For translation input
 document.querySelectorAll(".translate").forEach(function (el, index) {

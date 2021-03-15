@@ -26,9 +26,24 @@ const submitForm = e => {
         }
     }
 
+    inputObject["coordinates"] = getObjCoordinates(inputObject)
+
     arrInputObject.push(inputObject);
-    console.log(arrInputObject);
+    main(arrInputObject);
 }
+
+const getObjCoordinates = (data) => {
+
+    let coordinates = [];
+    if (data.shape == 'cube') {
+      coordinates.push(data.x - (data.length / 2), data.y - (data.length / 2));
+      coordinates.push(data.x + (data.length / 2), data.y - (data.length / 2));
+      coordinates.push(data.x - (data.length / 2), data.y + (data.length / 2));
+      coordinates.push(data.x + (data.length / 2), data.y + (data.length / 2));
+    } 
+  
+    return coordinates;
+  }
 
 
 console.log(arrInputObject)
