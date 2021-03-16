@@ -189,19 +189,26 @@
     attribute vec4 a_color;
     
     uniform mat4 u_matrix;
+    uniform float u_fudgeFactor;
     
     varying vec4 v_color;
     
     void main() {
       // Multiply the position by the matrix.
-      gl_Position = u_matrix * a_position;
+      vec4 position = u_matrix * a_position;
+    
+      // Adjust the z to divide by
+      float zToDivideBy = 1.0 + position.z * u_fudgeFactor;
+    
+      // Divide x and y by z.
+      gl_Position = vec4(position.xyz, zToDivideBy);
     
       // Pass the color to the fragment shader.
       v_color = a_color;
     }
-</script>
+    </script>
     <!-- fragment shader -->
-<script  id="fragment-shader-3d" type="x-shader/x-fragment">
+    <script  id="fragment-shader-3d" type="x-shader/x-fragment">
     precision mediump float;
     
     // Passed in from the vertex shader.
@@ -210,8 +217,7 @@
     void main() {
        gl_FragColor = v_color;
     }
-</script>
-<script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+    </script>
 
 <script src="scripts/event.js"></script>
 <script src="scripts/input.js"></script>
