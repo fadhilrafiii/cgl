@@ -1,5 +1,4 @@
-function normalize(v, dst) {
-    const size = 3;
+function normalizeVector(v, size, dst) {
     let sum = 0;
     for (let i = 0; i < size; i++) {
         sum += v[i]*v[i];
@@ -33,6 +32,14 @@ function cross(a, b, dst) {
         dst[i] = a[c1] * b[c2] - a[c2] * b[c1];
     }
     return dst;
+}
+
+function radToDeg(r) {
+    return (r * 180) / Math.PI;
+}
+
+function degToRad(d) {
+    return (d * Math.PI) / 180;
 }
 
 var m4 = {
@@ -202,47 +209,27 @@ var m4 = {
     },
 
     transformPoint: function transformPoint(m, v, dst) {
-        dst = dst || new Float32Array(3);
-        var v0 = v[0];
-        var v1 = v[1];
-        var v2 = v[2];
-        var d =
-            v0 * m[0 * 4 + 3] +
-            v1 * m[1 * 4 + 3] +
-            v2 * m[2 * 4 + 3] +
-            m[3 * 4 + 3];
-
-        dst[0] =
-            (v0 * m[0 * 4 + 0] +
-                v1 * m[1 * 4 + 0] +
-                v2 * m[2 * 4 + 0] +
-                m[3 * 4 + 0]) /
-            d;
-        dst[1] =
-            (v0 * m[0 * 4 + 1] +
-                v1 * m[1 * 4 + 1] +
-                v2 * m[2 * 4 + 1] +
-                m[3 * 4 + 1]) /
-            d;
-        dst[2] =
-            (v0 * m[0 * 4 + 2] +
-                v1 * m[1 * 4 + 2] +
-                v2 * m[2 * 4 + 2] +
-                m[3 * 4 + 2]) /
-            d;
-
+        const size = 3;
+        const mSize = 4;
+        dst = dst || new Float32Array(size);
+        let d = 0;
+        for (let i = 0; i < size; i++) {
+            d += v[i] * m[i * mSize + size];
+        }
+        d += m[size * mSize + size];
+        for (let i = 0; i < size; i++) {
+            dst[i] = 0;
+            for (let j = 0; j < size; j++) {
+                dst[i] += v[j] * m[j * mSize + i];
+            }
+            dst[i] += m[size * mSize + i] / d;
+        }
         return dst;
     },
 
     normalize: function normalize(v, dst) {
-        dst = dst || new Float32Array(3);
-        var length = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-        // make sure we don't divide by 0.
-        if (length > 0.00001) {
-            dst[0] = v[0] / length;
-            dst[1] = v[1] / length;
-            dst[2] = v[2] / length;
-        }
+        let size = 3;
+        dst = normalizeVector(v, size);
         return dst;
     },
 
@@ -278,11 +265,12 @@ var m4 = {
     },
 
     lookAt: function lookAt(cameraPosition, target, up, dst) {
-        dst = dst || new Float32Array(16);
-        var zAxis = normalize(subtractVectors(cameraPosition, target));
-        var xAxis = normalize(cross(up, zAxis));
-        var yAxis = normalize(cross(zAxis, xAxis));
-
+        const size = 4;
+        const len = size * size;
+        dst = dst || new Float32Array(len);
+        var zAxis = normalizeVector(subtractVectors(cameraPosition, target), 3);
+        var xAxis = normalizeVector(cross(up, zAxis), 3);
+        var yAxis = normalizeVector(cross(zAxis, xAxis), 3);
         dst[0] = xAxis[0];
         dst[1] = xAxis[1];
         dst[2] = xAxis[2];
@@ -303,11 +291,3 @@ var m4 = {
         return dst;
     },
 };
-
-function radToDeg(r) {
-    return (r * 180) / Math.PI;
-}
-
-function degToRad(d) {
-    return (d * Math.PI) / 180;
-}
