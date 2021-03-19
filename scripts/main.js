@@ -56,14 +56,6 @@ function main() {
     // Put normals data into buffer
     setNormals(gl);
 
-    function radToDeg(r) {
-        return (r * 180) / Math.PI;
-    }
-
-    function degToRad(d) {
-        return (d * Math.PI) / 180;
-    }
-
     var fieldOfViewRadians = degToRad(70);
     // var fRotationRadians = degToRad(0);
     var scale = [1, 1, 1];
