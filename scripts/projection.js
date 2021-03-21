@@ -1,10 +1,9 @@
-var gl = canvas.getContext("webgl");
-function perspectiveProjection() {
-    var fieldOfViewRadians = degToRad(70);
-    var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-    var zNear = 1;
-    var zFar = 2000;
-    var matrix = m4.perspective(
+function perspectiveProjection(gl) {
+    let fieldOfViewRadians = degToRad(70);
+    let aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+    let zNear = 1;
+    let zFar = 2000;
+    let matrix = m4.perspective(
         fieldOfViewRadians,
         aspect,
         zNear,
@@ -14,19 +13,19 @@ function perspectiveProjection() {
 }
 
 function orthographicProjection() {
-    var left = -600;
-    var right = 500;
-    var bottom = -400;
-    var top = 500;
-    var near = 1;
-    var far = 600;
-    var matrix = m4.orthographic(left, right, bottom, top, near, far);
+    let left = -600;
+    let right = 500;
+    let bottom = -400;
+    let top = 500;
+    let near = 1;
+    let far = 600;
+    let matrix = m4.orthographic(left, right, bottom, top, near, far);
     return matrix;
 }
 
 function obliqueProjection() {
-    var oblique = m4.oblique(100, 60);
-    var ortho = m4.orthographic(-600, 500, -400, 500, 1, 600);
-    var matrix = m4.multiply(oblique, ortho);
+    let oblique = m4.oblique(100, 60);
+    let ortho = m4.orthographic(-600, 500, -400, 500, 1, 600);
+    let matrix = m4.multiply(oblique, ortho);
     return matrix;
 }

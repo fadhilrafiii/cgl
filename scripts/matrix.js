@@ -1,10 +1,10 @@
-function normalizeVector(v, size, dst) {
+function normalizeVector(v, size) {
     let sum = 0;
     for (let i = 0; i < size; i++) {
         sum += v[i]*v[i];
     }
-    dst = dst || new Float32Array(size);
-    var length = Math.sqrt(sum);
+    let dst = new Float32Array(size);
+    let length = Math.sqrt(sum);
     // make sure we don't divide by 0.
     if (length > 0.00001) {
         for (let p = 0; p < size; p++) {
@@ -14,18 +14,18 @@ function normalizeVector(v, size, dst) {
     return dst;
 }
 
-function subtractVectors(a, b, dst) {
+function subtractVectors(a, b) {
     const size = 3;
-    dst = dst || new Float32Array(size);
+    let dst = new Float32Array(size);
     for (let i = 0; i < size; i++) {
         dst[i] = a[i] - b[i];
     }
     return dst;
 }
 
-function cross(a, b, dst) {
+function cross(a, b) {
     const size = 3;
-    dst = dst || new Float32Array(size);
+    let dst = new Float32Array(size);
     for (let i = 0; i < size; i++) {
         let c1 = (i+1)%size;
         let c2 = (i+2)%size;
@@ -43,10 +43,10 @@ function degToRad(d) {
 }
 
 var m4 = {
-    transpose: function transpose(m, dst) {
+    transpose: function transpose(m) {
         const size = 4;
         const len = size * size;
-        dst = dst || new Float32Array(len);
+        let dst = new Float32Array(len);
         for (let i = 0; i < len; i+=size) {
             // i = 0 4 8 12
             let j = Math.floor(i/size);
@@ -57,10 +57,10 @@ var m4 = {
         }
         return dst;
     },
-    inverse: function inverse(m, dst) {
+    inverse: function inverse(m) {
         const size = 4;
         const len = size * size;
-        dst = new Float32Array(len);
+        let dst = new Float32Array(len);
         for (let i = 0; i < len; i += size+1) {
             dst[i] = 1;
             m[i] = 1;
@@ -164,22 +164,22 @@ var m4 = {
     },
 
     xRotation: function (angleInRadians) {
-        var c = Math.cos(angleInRadians);
-        var s = Math.sin(angleInRadians);
+        let c = Math.cos(angleInRadians);
+        let s = Math.sin(angleInRadians);
 
         return [1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1];
     },
 
     yRotation: function (angleInRadians) {
-        var c = Math.cos(angleInRadians);
-        var s = Math.sin(angleInRadians);
+        let c = Math.cos(angleInRadians);
+        let s = Math.sin(angleInRadians);
 
         return [c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1];
     },
 
     zRotation: function (angleInRadians) {
-        var c = Math.cos(angleInRadians);
-        var s = Math.sin(angleInRadians);
+        let c = Math.cos(angleInRadians);
+        let s = Math.sin(angleInRadians);
 
         return [c, s, 0, 0, -s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
     },
@@ -208,10 +208,10 @@ var m4 = {
         return m4.multiply(m, m4.scaling(sx, sy, sz));
     },
 
-    transformPoint: function transformPoint(m, v, dst) {
+    transformPoint: function transformPoint(m, v) {
         const size = 3;
         const mSize = 4;
-        dst = dst || new Float32Array(size);
+        let dst = new Float32Array(size);
         let d = 0;
         for (let i = 0; i < size; i++) {
             d += v[i] * m[i * mSize + size];
@@ -227,14 +227,14 @@ var m4 = {
         return dst;
     },
 
-    normalize: function normalize(v, dst) {
+    normalize: function normalize(v) {
         let size = 3;
-        dst = normalizeVector(v, size);
+        let dst = normalizeVector(v, size);
         return dst;
     },
 
-    identity: function(dst) {
-        dst = dst || new Float32Array(16);
+    identity: function() {
+        let dst = new Float32Array(16);
         dst[0] = 1;  dst[4] = 0;  dst[8] = 0;  dst[12] = 0;
         dst[1] = 0;  dst[5] = 1;  dst[9] = 0;  dst[13] = 0;
         dst[2] = 0;  dst[6] = 0;  dst[10] = 1; dst[14] = 0;
@@ -242,12 +242,12 @@ var m4 = {
         return dst;
     },
 
-    oblique: function(theta, phi, dst){   
-        dst = dst || new Float32Array(16);  
-        var t = degToRad(theta);
-        var p = degToRad(phi);
-        var cotT = -1/Math.tan(t);
-        var cotP = -1/Math.tan(p);
+    oblique: function(theta, phi){   
+        let dst = new Float32Array(16);  
+        let t = degToRad(theta);
+        let p = degToRad(phi);
+        let cotT = -1/Math.tan(t);
+        let cotP = -1/Math.tan(p);
     
         dst[0] = 1;
         dst[1] = 0;
@@ -273,13 +273,13 @@ var m4 = {
 
     orthographic: function(left, right, bottom, top, near, far) {
         // Each of the parameters represents the plane of the bounding box
-        var lr = 1 / (left - right);
-        var bt = 1 / (bottom - top);
-        var nf = 1 / (near - far);
+        let lr = 1 / (left - right);
+        let bt = 1 / (bottom - top);
+        let nf = 1 / (near - far);
             
-        var row4col1 = (left + right) * lr;
-        var row4col2 = (top + bottom) * bt;
-        var row4col3 = (far + near) * nf;
+        let row4col1 = (left + right) * lr;
+        let row4col2 = (top + bottom) * bt;
+        let row4col3 = (far + near) * nf;
         
         return [
             -2 * lr,        0,        0, 0,
@@ -293,12 +293,11 @@ var m4 = {
         fieldOfViewInRadians,
         aspect,
         near,
-        far,
-        dst
+        far
     ) {
-        dst = dst || new Float32Array(16);
-        var f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians);
-        var rangeInv = 1.0 / (near - far);
+        let dst = new Float32Array(16);
+        let f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians);
+        let rangeInv = 1.0 / (near - far);
 
         dst[0] = f / aspect;
         dst[1] = 0;
@@ -320,13 +319,13 @@ var m4 = {
         return dst;
     },
 
-    lookAt: function lookAt(cameraPosition, target, up, dst) {
+    lookAt: function lookAt(cameraPosition, target, up) {
         const size = 4;
         const len = size * size;
-        dst = dst || new Float32Array(len);
-        var zAxis = normalizeVector(subtractVectors(cameraPosition, target), 3);
-        var xAxis = normalizeVector(cross(up, zAxis), 3);
-        var yAxis = normalizeVector(cross(zAxis, xAxis), 3);
+        let dst = new Float32Array(len);
+        let zAxis = normalizeVector(subtractVectors(cameraPosition, target), 3);
+        let xAxis = normalizeVector(cross(up, zAxis), 3);
+        let yAxis = normalizeVector(cross(zAxis, xAxis), 3);
         dst[0] = xAxis[0];
         dst[1] = xAxis[1];
         dst[2] = xAxis[2];
