@@ -1,5 +1,5 @@
 function setGeometry(gl) {
-  let positions = cubePositions;
+  let positions = tetrahedronPositions;
   // Center the F around the origin and Flip it around. We do this because
   // we're in 3D now with and +Y is up where as before when we started with 2D
   // we had +Y as down.
@@ -21,6 +21,6 @@ function setGeometry(gl) {
 }
   
   function setNormals(gl) {
-    let normals = cubeNormals;
+    let normals = tetrahedronNormals;
     gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW);
   }
