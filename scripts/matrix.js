@@ -155,7 +155,7 @@ var m4 = {
                 }
             }
         }
-        console.log(ret)
+        // console.log(ret)
         return ret;
     },
 
@@ -231,6 +231,62 @@ var m4 = {
         let size = 3;
         dst = normalizeVector(v, size);
         return dst;
+    },
+
+    identity: function(dst) {
+        dst = dst || new Float32Array(16);
+        dst[0] = 1;  dst[4] = 0;  dst[8] = 0;  dst[12] = 0;
+        dst[1] = 0;  dst[5] = 1;  dst[9] = 0;  dst[13] = 0;
+        dst[2] = 0;  dst[6] = 0;  dst[10] = 1; dst[14] = 0;
+        dst[3] = 0;  dst[7] = 0;  dst[11] = 0; dst[15] = 1;
+        return dst;
+    },
+
+    oblique: function(theta, phi, dst){   
+        dst = dst || new Float32Array(16);  
+        var t = degToRad(theta);
+        var p = degToRad(phi);
+        var cotT = -1/Math.tan(t);
+        var cotP = -1/Math.tan(p);
+    
+        dst[0] = 1;
+        dst[1] = 0;
+        dst[2] = cotT;
+        dst[3] = 0;
+        dst[4] = 0;
+        dst[5] = 1;
+        dst[6] = cotP;
+        dst[7] = 0;
+        dst[8] = 0;
+        dst[9] = 0;
+        dst[10] = 1;
+        dst[11] = 0;
+        dst[12] = 0
+        dst[13] = 0
+        dst[14] = 0
+        dst[15] = 1;
+    
+        m4.transpose(dst);
+    
+        return dst;   
+    },
+
+    orthographic: function(left, right, bottom, top, near, far) {
+        // Each of the parameters represents the plane of the bounding box
+        var lr = 1 / (left - right);
+        var bt = 1 / (bottom - top);
+        var nf = 1 / (near - far);
+            
+        var row4col1 = (left + right) * lr;
+        var row4col2 = (top + bottom) * bt;
+        var row4col3 = (far + near) * nf;
+        
+        return [
+            -2 * lr,        0,        0, 0,
+                0,  -2 * bt,        0, 0,
+                0,        0,   2 * nf, 0,
+            row4col1, row4col2, row4col3, 1
+        ];
     },
 
     perspective: function perspective(
