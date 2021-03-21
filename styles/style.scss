@@ -295,6 +295,10 @@ nav {
             justify-content: center;
             align-items: flex-start;
 
+            @media (max-width: 1024px) { 
+                flex-flow: row wrap;
+            }
+
             .toolbox {
                 box-sizing: border-box;
                 background: linear-gradient(-15deg, #2883ab, #a580e8);
@@ -305,7 +309,7 @@ nav {
                     4px 4px 6px 4px rgba(0, 0, 0, 0.1);
                 text-align: left;
                 position: relative;
-                width: 550px;
+                min-width: 300px;
 
                 @media (max-width: 768px) {
                     width: 100%;
@@ -316,7 +320,7 @@ nav {
 
                     button,
                     .file {
-                        margin: 0 5px;
+                        margin: 0 5px 10px;
                         padding: 5px;
                         display: inline-block;
                         width: 100px;
@@ -551,6 +555,8 @@ input[type="file"] {
 .form-wrapper {
     display: flex;
     align-items: flex-start;
+    position: relative;
+    width: 100%;
 
     @media (max-width: 1024px) {
         flex-flow: row wrap;
@@ -612,4 +618,29 @@ input[type="range"]::-webkit-slider-thumb {
     cursor: -moz-grab;
     cursor: -webkit-grab;
     border: solid 2px white;
+}
+
+.projection-input {
+    width: 100%;
+    background: white;
+    padding: 8px;
+    border-radius: 4px;
+    color: #5f3d9a;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1024px) {
+    .left, .right {
+        width: 100%  !important;
+
+        input[type="range"] {
+            width: 100%;
+        }
+    }
+}
+
+#perspective, #orthographic, #oblique {
+    display: none;
 }
