@@ -32,8 +32,6 @@ document.querySelectorAll(".slider").forEach(function (el, index) {
             ", #f5f6f8));";
         el.style = style;
         transformArray[index] = parseInt(el.value);
-        document.getElementById(listOfSliderLabel[index]).textContent =
-            el.value;
         main();
     };
     el.oninput();
@@ -121,3 +119,28 @@ const importFile = () => {
         };
     }
 };
+
+let obliqueInput = document.getElementById("oblique");
+let perspectiveInput = document.getElementById("perspective");
+let orthoInput = document.getElementById("orthographic")
+
+const openSlider = e => {
+
+    if (e === "perspective") {
+        perspectiveInput.style.display = "block";
+        obliqueInput.style.display = "none";
+        orthoInput.style.display = "none";
+    } else if (e === "orthogonal") {
+        perspectiveInput.style.display = "none";
+        obliqueInput.style.display = "none";
+        orthoInput.style.display = "block";
+    } else if (e === "oblique") {
+        perspectiveInput.style.display = "none";
+        obliqueInput.style.display = "block";
+        orthoInput.style.display = "block";
+    } else {
+        perspectiveInput.style.display = "none";
+        obliqueInput.style.display = "none";
+        orthoInput.style.display = "none";
+    }
+}

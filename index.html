@@ -174,6 +174,149 @@
                     </form>
 
                 </div>
+
+                <div class="toolbox">
+                    <form class="new-form" name="newForm">
+                        <div class="form-wrapper">
+                            <div>
+                                <select name="projection" id="projection" class="projection-input" onchange="openSlider(this.value)">
+                                    <option hidden>What Projection?</option>
+                                    <option value="perspective">Perspective</option>
+                                    <option value="oblique">Oblique</option>
+                                    <option value="orthogonal">Orthogonal</option>
+                                </select>
+                                <div id="perspective">
+                                    <label for="fov">Field of View:</label>
+                                    <span id="fov-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="fov"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="fov">
+                                    <label for="znear">Z-Near:</label>
+                                    <span id="znear-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="znear"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="znear">
+                                    <label for="zfar">Z-Far:</label>
+                                    <span id="zfar-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="zfar"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="zfar">
+                                </div>
+                                <div id="orthographic">
+                                    <label for="left">Left:</label>
+                                    <span id="left-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="left"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="left">
+                                    <label for="right">Right:</label>
+                                    <span id="right-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="right"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="right">
+                                    <label for="bottom">Bottom:</label>
+                                    <span id="bottom-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="bottom"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="bottom">
+                                    <label for="top">Top:</label>
+                                    <span id="top-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="top"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="top">
+                                    <label for="near">Near:</label>
+                                    <span id="near-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="near"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="near">
+                                    <label for="far">Far:</label>
+                                    <span id="far-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="far"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="far">
+                                </div>
+                                <div id="oblique">
+                                    <label for="tetha">Tetha:</label>
+                                    <span id="tetha-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="tetha"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="tetha">
+                                    <label for="phi">Phi:</label>
+                                    <span id="phi-label"></span><br/>
+                                    <input
+                                        type="range"
+                                        id="phi"
+                                        min="0"
+                                        max="100"
+                                        value="0"
+                                        step="0.01"
+                                        class="slider"
+                                        name="phi">
+                                </div>
+                            </div>
+              
+                        </div>
+                    </form>
+                </div>
             </div>
 
         </div>
