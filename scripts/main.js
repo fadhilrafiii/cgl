@@ -56,7 +56,6 @@ function main() {
     // Put normals data into buffer
     setNormals(gl);
 
-    var fieldOfViewRadians = degToRad(70);
     // var fRotationRadians = degToRad(0);
     var scale = [1, 1, 1];
     var translation = [0, 0, 0];
@@ -112,15 +111,9 @@ function main() {
         );
 
         // Compute the projection matrix
-        var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-        var zNear = 1;
-        var zFar = 2000;
-        var projectionMatrix = m4.perspective(
-            fieldOfViewRadians,
-            aspect,
-            zNear,
-            zFar
-        );
+        // var projectionMatrix = orthographicProjection();
+        var projectionMatrix = perspectiveProjection();
+        // var projectionMatrix = obliqueProjection();
 
         // Compute the camera's matrix
         var camera = [0, 250, 500];
