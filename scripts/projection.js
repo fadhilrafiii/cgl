@@ -14,19 +14,19 @@ function perspectiveProjection() {
 }
 
 function orthographicProjection() {
-    var left = -2;
-    var right = 2;
-    var bottom = -2;
-    var top = 2;
-    var near = 0.1;
-    var far = 100;
+    var left = -600;
+    var right = 500;
+    var bottom = -400;
+    var top = 500;
+    var near = 1;
+    var far = 600;
     var matrix = m4.orthographic(left, right, bottom, top, near, far);
     return matrix;
 }
 
 function obliqueProjection() {
-    var oblique = m4.oblique(15, 60);
-    var ortho = m4.orthographic(-2.0, 2.0, -2.0, 2.0, 0.1, 100);
+    var oblique = m4.oblique(100, 60);
+    var ortho = m4.orthographic(-600, 500, -400, 500, 1, 600);
     var matrix = m4.multiply(oblique, ortho);
     return matrix;
 }

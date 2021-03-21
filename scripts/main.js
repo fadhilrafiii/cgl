@@ -112,8 +112,8 @@ function main() {
 
         // Compute the projection matrix
         // var projectionMatrix = orthographicProjection();
-        var projectionMatrix = perspectiveProjection();
-        // var projectionMatrix = obliqueProjection();
+        // var projectionMatrix = perspectiveProjection();
+        var projectionMatrix = obliqueProjection();
 
         // Compute the camera's matrix
         var camera = [0, 250, 500];
