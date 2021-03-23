@@ -418,6 +418,7 @@ nav {
                     color: #5f3d9a;
                     font-weight: 500;
                     font-family: "Poppins", sans-serif;
+                    margin-bottom: 10px;
                 }
             }
 
@@ -473,7 +474,8 @@ nav {
 
 .toolbox.middle {
     min-width: 200px !important;
-
+    display: flex;
+    flex-direction: column;
 }
 
 .footer {

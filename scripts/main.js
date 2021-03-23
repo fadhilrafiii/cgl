@@ -1,7 +1,6 @@
 "use strict";
 
-function main(input, projection, transform) {
-
+function main(input, projection, transform, cameraArr) {
     /** @type {HTMLCanvasElement} */
     var canvas = document.querySelector("#canvas");
     var gl = canvas.getContext("webgl");
@@ -9,12 +8,8 @@ function main(input, projection, transform) {
         return;
     }
 
-    const vsSource = document
-        .getElementById("vertex-shader-3d")
-        .text;
-    const fsSource = document
-        .getElementById("fragment-shader-3d")
-        .text;
+    const vsSource = document.getElementById("vertex-shader-3d").text;
+    const fsSource = document.getElementById("fragment-shader-3d").text;
 
     const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
     const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
@@ -30,10 +25,19 @@ function main(input, projection, transform) {
     var normalLocation = gl.getAttribLocation(program, "a_normal");
 
     // lookup uniforms
-    var worldViewProjectionLocation = gl.getUniformLocation(program, "u_worldViewProjection");
-    var worldInverseTransposeLocation = gl.getUniformLocation(program, "u_worldInverseTranspose");
+    var worldViewProjectionLocation = gl.getUniformLocation(
+        program,
+        "u_worldViewProjection"
+    );
+    var worldInverseTransposeLocation = gl.getUniformLocation(
+        program,
+        "u_worldInverseTranspose"
+    );
     var colorLocation = gl.getUniformLocation(program, "u_color");
-    var reverseLightDirectionLocation = gl.getUniformLocation(program, "u_reverseLightDirection");
+    var reverseLightDirectionLocation = gl.getUniformLocation(
+        program,
+        "u_reverseLightDirection"
+    );
 
     var positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -60,12 +64,12 @@ function main(input, projection, transform) {
     var fieldOfViewRadians = degToRad(70);
     var scale = transform[3];
     var translation = [transform[4], transform[5], transform[6]];
-    translation = translation.map(item => -1 * parseInt(item))
+    translation = translation.map((item) => -1 * parseInt(item));
     var rotation = [
         degToRad(transform[0]),
         degToRad(transform[1]),
-        degToRad(transform[2])
-    ]
+        degToRad(transform[2]),
+    ];
 
     drawScene();
 
@@ -84,7 +88,14 @@ function main(input, projection, transform) {
         var normalize = false;
         var stride = 0;
         var offset = 0;
-        gl.vertexAttribPointer(positionLocation, size, type, normalize, stride, offset);
+        gl.vertexAttribPointer(
+            positionLocation,
+            size,
+            type,
+            normalize,
+            stride,
+            offset
+        );
 
         gl.enableVertexAttribArray(normalLocation);
         gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
@@ -94,44 +105,90 @@ function main(input, projection, transform) {
         var normalize = false;
         var stride = 0;
         var offset = 0;
-        gl.vertexAttribPointer(normalLocation, size, type, normalize, stride, offset);
+        gl.vertexAttribPointer(
+            normalLocation,
+            size,
+            type,
+            normalize,
+            stride,
+            offset
+        );
 
         var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
         var zNear = 1;
         var zFar = 2000;
-        var projectionMatrix = m4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
+        var projectionMatrix = m4.perspective(
+            fieldOfViewRadians,
+            aspect,
+            zNear,
+            zFar
+        );
 
-        projectionMatrix = m4.scale(projectionMatrix, scale, scale, 1)
+        projectionMatrix = m4.scale(projectionMatrix, scale, scale, 1);
 
-        var camera = [0, 250, 500];
-        var target = [0, 0, 0];
+        var camera = [0, 2000 / (cameraArr[3]+2), 3000 / (cameraArr[3]+2)];
+        var target = [0, 1, 0];
         var up = [0, 1, 0];
         var cameraMatrix = m4.lookAt(camera, target, up);
-        cameraMatrix = m4.translate(cameraMatrix, translation[0], translation[1], translation[2]);
+        cameraMatrix = m4.translate(
+            cameraMatrix,
+            translation[0],
+            translation[1],
+            translation[2]
+        );
         cameraMatrix = m4.scale(cameraMatrix, 1, 1, 1);
         var viewMatrix = m4.inverse(cameraMatrix);
         var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
+        viewProjectionMatrix = m4.xRotate(
+            viewProjectionMatrix,
+            degToRad(cameraArr[0]),
+            0
+        );
+        viewProjectionMatrix = m4.yRotate(
+            viewProjectionMatrix,
+            degToRad(cameraArr[1]),
+            0
+        );
+        viewProjectionMatrix = m4.zRotate(
+            viewProjectionMatrix,
+            degToRad(cameraArr[2]),
+            0
+        );
 
         var worldMatrix = m4.xRotation(rotation[0]);
         worldMatrix = m4.xRotate(worldMatrix, rotation[0], input.outer / 2);
         worldMatrix = m4.yRotate(worldMatrix, rotation[1], input.outer / 2);
         worldMatrix = m4.zRotate(worldMatrix, rotation[2], input.outer / 2);
 
-        var worldViewProjectionMatrix = m4.multiply(viewProjectionMatrix, worldMatrix);
+        var worldViewProjectionMatrix = m4.multiply(
+            viewProjectionMatrix,
+            worldMatrix
+        );
         var worldInverseMatrix = m4.inverse(worldMatrix);
         var worldInverseTransposeMatrix = m4.transpose(worldInverseMatrix);
 
-        gl.uniformMatrix4fv(worldViewProjectionLocation, false, worldViewProjectionMatrix);
-        gl.uniformMatrix4fv(worldInverseTransposeLocation, false, worldInverseTransposeMatrix);
+        gl.uniformMatrix4fv(
+            worldViewProjectionLocation,
+            false,
+            worldViewProjectionMatrix
+        );
+        gl.uniformMatrix4fv(
+            worldInverseTransposeLocation,
+            false,
+            worldInverseTransposeMatrix
+        );
 
         if (input.color) {
-            const {r, g, b} = input.color
+            const { r, g, b } = input.color;
             gl.uniform4fv(colorLocation, [r, g, b, 1]);
         } else {
             gl.uniform4fv(colorLocation, [1, 0, 0, 1]);
         }
 
-        gl.uniform3fv(reverseLightDirectionLocation, m4.normalize([0.5, 0.7, 1]));
+        gl.uniform3fv(
+            reverseLightDirectionLocation,
+            m4.normalize([0.5, 0.7, 1])
+        );
 
         // Draw the geometry.
         var primitiveType = gl.TRIANGLES;

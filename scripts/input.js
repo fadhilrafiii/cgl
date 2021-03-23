@@ -8,6 +8,13 @@ const listOfSliderLabel = [
     "z-translate-label",
 ];
 
+const cameraSliderLabel = [
+    "x-camera-label",
+    "y-camera-label",
+    "z-camera-label",
+    "zoom-camera-label"
+]
+
 let obliqueInput = document.getElementById("oblique");
 let perspectiveInput = document.getElementById("perspective");
 let orthoInput = document.getElementById("orthographic")
@@ -26,6 +33,17 @@ let transformArray = [
     document.getElementById("y-translate").value,
     document.getElementById("z-translate").value,
 ];
+
+let cameraArray = [
+    parseInt(document.getElementById("x-camera").value),
+    parseInt(document.getElementById("y-camera").value),
+    parseInt(document.getElementById("z-camera").value),
+    parseInt(document.getElementById("zoom-camera").value)
+]
+
+console.log(cameraArray)
+
+
 let projection = {
     type: "perspective",
     element: []
@@ -57,8 +75,8 @@ const submitForm = e => {
             inputObject[key] = parseInt(value);
         }
     }
-    console.log(inputObject)
-    main(inputObject, projection, transformArray)
+
+    main(inputObject, projection, transformArray, cameraArray)
 }
 
 function openSlider(e){
@@ -105,29 +123,31 @@ document.querySelectorAll(".transform-slider").forEach(function (el, index) {
         transformArray[index] = parseInt(el.value);
         document.getElementById(listOfSliderLabel[index]).textContent =
             el.value;
-        main(inputObject, projection, transformArray)
+        main(inputObject, projection, transformArray, cameraArray)
     };
     el.oninput();
 });
 
-// document.querySelectorAll(".transform-slider").forEach(function (el, index) {
-//     el.oninput = function () {
-//         var valPercent =
-//             (el.valueAsNumber - parseInt(el.min)) /
-//             (parseInt(el.max) - parseInt(el.min));
-//         var style =
-//             "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
-//             valPercent +
-//             ", #ffa500), color-stop(" +
-//             valPercent +
-//             ", #f5f6f8));";
-//         el.style = style;
-//         transformArray[index] = parseInt(el.value);
-//         document.getElementById(listOfSliderLabel[index]).textContent =
-//             el.value;
-//         main(inputObject, projection, transformArray)
-//     };
-//     el.oninput();
-// });
+document.querySelectorAll(".camera-slider").forEach(function (el, index) {
+    el.oninput = function () {
+        var valPercent =
+            (el.valueAsNumber - parseInt(el.min)) /
+            (parseInt(el.max) - parseInt(el.min));
+        var style =
+            "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
+            valPercent +
+            ", #ffa500), color-stop(" +
+            valPercent +
+            ", #f5f6f8));";
+        el.style = style;
+        cameraArray[index] = parseInt(el.value);
+        document.getElementById(cameraSliderLabel[index]).textContent =
+            el.value;
+        main(inputObject, projection, transformArray, cameraArray)
+    };
+    el.oninput();
+});
+
+
 
 

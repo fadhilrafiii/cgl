@@ -383,6 +383,7 @@ nav .hamburger:hover .hamburger-btn:hover {
   color: #5f3d9a;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
+  margin-bottom: 10px;
 }
 .main .draw .container #fileName {
   display: block;
@@ -432,6 +433,8 @@ nav .hamburger:hover .hamburger-btn:hover {
 
 .toolbox.middle {
   min-width: 200px !important;
+  display: flex;
+  flex-direction: column;
 }
 
 .footer {
