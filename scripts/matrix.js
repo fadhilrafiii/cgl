@@ -302,16 +302,22 @@ var m4 = {
         return m4.multiply(m, m4.translation(tx, ty, tz));
     },
 
-    xRotate: function (m, angleInRadians) {
-        return m4.multiply(m, m4.xRotation(angleInRadians));
+    xRotate: function (m, angleInRadians, x) {
+        let temp = m4.multiply(m4.translation(0, x/16, -x/4), m4.xRotation(angleInRadians))
+        temp = m4.multiply(temp, m4.translation(0, -x/16, x/4))
+        return m4.multiply(m, temp);
     },
 
-    yRotate: function (m, angleInRadians) {
-        return m4.multiply(m, m4.yRotation(angleInRadians));
+    yRotate: function (m, angleInRadians,x) {
+        let temp = m4.multiply(m4.translation(0,-x/2,-2*x/3), m4.yRotation(angleInRadians))
+        temp = m4.multiply(temp, m4.translation(0,x/2,2*x/3))
+        return m4.multiply(m, temp);
     },
 
-    zRotate: function (m, angleInRadians) {
-        return m4.multiply(m, m4.zRotation(angleInRadians));
+    zRotate: function (m, angleInRadians,x) {
+        let temp = m4.multiply(m4.translation(0,x/2,-x), m4.zRotation(angleInRadians))
+        temp = m4.multiply(temp, m4.translation(0,-x/2,x))
+        return m4.multiply(m, temp);
     },
 
     scale: function (m, sx, sy, sz) {
