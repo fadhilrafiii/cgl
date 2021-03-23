@@ -1,7 +1,8 @@
 "use strict";
 
-function main() {
+function main(input, projection, transform) {
     // Get A WebGL context
+    console.log(transform)
     /** @type {HTMLCanvasElement} */
     var canvas = document.querySelector("#canvas");
     var gl = canvas.getContext("webgl");
@@ -42,19 +43,19 @@ function main() {
         "u_reverseLightDirection"
     );
 
-    // Create a buffer to put positions in
     var positionBuffer = gl.createBuffer();
-    // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    // Put geometry data into buffer
-    setGeometry(gl);
+    
+    if (input.shape === "cube") {
+        setCubeVertices(gl, input.outer, input.inner);
+    }
 
-    // Create a buffer to put normals in
     var normalBuffer = gl.createBuffer();
-    // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = normalBuffer)
     gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
-    // Put normals data into buffer
-    setNormals(gl);
+    
+    if (input.shape === "cube") {
+        setCubeNormals(gl);
+    }
 
     function radToDeg(r) {
         return (r * 180) / Math.PI;
@@ -65,19 +66,13 @@ function main() {
     }
 
     var fieldOfViewRadians = degToRad(70);
-    // var fRotationRadians = degToRad(0);
-    var scale = [1, 1, 1];
-    var translation = [0, 0, 0];
-    var rotation = [degToRad(10), degToRad(20), degToRad(40)]
+    var scale = transform[3];
+    var translation = [transform[4], transform[5], transform[6]];
+    translation = translation.map(item => -1*parseInt(item))
+    var rotation = [degToRad(transform[0]), degToRad(transform[1]), degToRad(transform[2])]
 
     drawScene();
 
-    // function updateRotation(event, ui) {
-    //     fRotationRadians = degToRad(ui.value);
-    //     drawScene();
-    // }
-
-    // Draw the scene.
     function drawScene() {
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -88,11 +83,11 @@ function main() {
         gl.enableVertexAttribArray(positionLocation);
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-        var size = 3; // 3 components per iteration
-        var type = gl.FLOAT; // the data is 32bit floats
-        var normalize = false; // don't normalize the data
-        var stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
-        var offset = 0; // start at the beginning of the buffer
+        var size = 3; 
+        var type = gl.FLOAT; 
+        var normalize = false; 
+        var stride = 0; 
+        var offset = 0; 
         gl.vertexAttribPointer(
             positionLocation,
             size,
@@ -105,11 +100,11 @@ function main() {
         gl.enableVertexAttribArray(normalLocation);
         gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
 
-        var size = 3; // 3 components per iteration
-        var type = gl.FLOAT; // the data is 32bit floating point values
-        var normalize = false; // normalize the data (convert from 0-255 to 0-1)
-        var stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
-        var offset = 0; // start at the beginning of the buffer
+        var size = 3; 
+        var type = gl.FLOAT; 
+        var normalize = false; 
+        var stride = 0; 
+        var offset = 0; 
         gl.vertexAttribPointer(
             normalLocation,
             size,
@@ -119,7 +114,6 @@ function main() {
             offset
         );
 
-        // Compute the projection matrix
         var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
         var zNear = 1;
         var zFar = 2000;
@@ -130,24 +124,21 @@ function main() {
             zFar
         );
 
-        // Compute the camera's matrix
+        projectionMatrix = m4.scale(projectionMatrix, scale, scale, 1)
+
         var camera = [0, 250, 500];
         var target = [0, 0, 0];
         var up = [0, 1, 0];
         var cameraMatrix = m4.lookAt(camera, target, up);
         cameraMatrix = m4.translate(cameraMatrix, translation[0], translation[1], translation[2]);
-        cameraMatrix = m4.scale(cameraMatrix, scale[0], scale[1], scale[2]);
+        cameraMatrix = m4.scale(cameraMatrix, 1, 1, 1);
         var viewMatrix = m4.inverse(cameraMatrix);
         var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
         
-
-        // var worldMatrix = m4.xRotation(rotation[0]);
         var worldMatrix = m4.xRotation(rotation[0]);
         worldMatrix = m4.yRotate(worldMatrix, rotation[1]);
         worldMatrix = m4.zRotate(worldMatrix, rotation[2]);
 
-        
-        // Multiply the matrices.
         var worldViewProjectionMatrix = m4.multiply(
             viewProjectionMatrix,
             worldMatrix
@@ -155,7 +146,6 @@ function main() {
         var worldInverseMatrix = m4.inverse(worldMatrix);
         var worldInverseTransposeMatrix = m4.transpose(worldInverseMatrix);
 
-        // Set the matrices
         gl.uniformMatrix4fv(
             worldViewProjectionLocation,
             false,
@@ -167,10 +157,13 @@ function main() {
             worldInverseTransposeMatrix
         );
 
-        // Set the color to use
-        gl.uniform4fv(colorLocation, [1, 0, 0, 1]); // green
+        if (input.color) {
+            const {r,g,b} = input.color
+            gl.uniform4fv(colorLocation, [r,g,b, 1]); 
+        } else {
+            gl.uniform4fv(colorLocation, [1,0,0, 1]); 
+        }
 
-        // set the light direction.
         gl.uniform3fv(
             reverseLightDirectionLocation,
             m4.normalize([0.5, 0.7, 1])
@@ -184,4 +177,3 @@ function main() {
     }
 }
 
-main();

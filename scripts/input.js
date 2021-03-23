@@ -1,4 +1,37 @@
-let arrInputObject = [];
+const listOfSliderLabel = [
+    "x-rotate-label",
+    "y-rotate-label",
+    "z-rotate-label",
+    "scale-label",
+    "x-translate-label",
+    "y-translate-label",
+    "z-translate-label",
+];
+
+let obliqueInput = document.getElementById("oblique");
+let perspectiveInput = document.getElementById("perspective");
+let orthoInput = document.getElementById("orthographic")
+
+perspectiveInput.style.display = "none";
+obliqueInput.style.display = "none";
+orthoInput.style.display = "none";
+
+
+let transformArray = [
+    document.getElementById("x-rotate").value,
+    document.getElementById("y-rotate").value,
+    document.getElementById("z-rotate").value,
+    document.getElementById("scale").value,
+    document.getElementById("x-translate").value,
+    document.getElementById("y-translate").value,
+    document.getElementById("z-translate").value,
+];
+let projection = {
+    type: "perspective",
+    element: []
+}
+
+let inputObject = {};
 
 const form = document.querySelector("form");
 
@@ -11,7 +44,6 @@ const submitForm = e => {
     
     const entries = dataForm.entries();
     
-    let inputObject = {};
     for (let item of entries) {
         let [key, value] = item;
 
@@ -25,25 +57,77 @@ const submitForm = e => {
             inputObject[key] = parseInt(value);
         }
     }
-
-    inputObject["coordinates"] = getObjCoordinates(inputObject)
-
-    arrInputObject.push(inputObject);
-    main(arrInputObject);
+    console.log(inputObject)
+    main(inputObject, projection, transformArray)
 }
 
-const getObjCoordinates = (data) => {
+function openSlider(e){
 
-    let coordinates = [];
-    if (data.shape == 'cube') {
-      coordinates.push(data.x - (data.length / 2), data.y - (data.length / 2));
-      coordinates.push(data.x + (data.length / 2), data.y - (data.length / 2));
-      coordinates.push(data.x - (data.length / 2), data.y + (data.length / 2));
-      coordinates.push(data.x + (data.length / 2), data.y + (data.length / 2));
-    } 
-  
-    return coordinates;
-  }
+    if (e === "perspective") {
+        perspectiveInput.style.display = "block";
+        obliqueInput.style.display = "none";
+        orthoInput.style.display = "none";
+    } else if (e === "orthogonal") {
+        perspectiveInput.style.display = "none";
+        obliqueInput.style.display = "none";
+        orthoInput.style.display = "block";
+    } else if (e === "oblique") {
+        perspectiveInput.style.display = "none";
+        obliqueInput.style.display = "block";
+        orthoInput.style.display = "block";
+    } else {
+        perspectiveInput.style.display = "none";
+        obliqueInput.style.display = "none";
+        orthoInput.style.display = "none";
+    }
+
+    projection.type = e
+    projection.element = []
+
+    console.log(projection)
+}
 
 
-console.log(arrInputObject)
+
+// For slider (rotation and scaling) input
+document.querySelectorAll(".transform-slider").forEach(function (el, index) {
+    el.oninput = function () {
+        var valPercent =
+            (el.valueAsNumber - parseInt(el.min)) /
+            (parseInt(el.max) - parseInt(el.min));
+        var style =
+            "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
+            valPercent +
+            ", #ffa500), color-stop(" +
+            valPercent +
+            ", #f5f6f8));";
+        el.style = style;
+        transformArray[index] = parseInt(el.value);
+        document.getElementById(listOfSliderLabel[index]).textContent =
+            el.value;
+        main(inputObject, projection, transformArray)
+    };
+    el.oninput();
+});
+
+// document.querySelectorAll(".transform-slider").forEach(function (el, index) {
+//     el.oninput = function () {
+//         var valPercent =
+//             (el.valueAsNumber - parseInt(el.min)) /
+//             (parseInt(el.max) - parseInt(el.min));
+//         var style =
+//             "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
+//             valPercent +
+//             ", #ffa500), color-stop(" +
+//             valPercent +
+//             ", #f5f6f8));";
+//         el.style = style;
+//         transformArray[index] = parseInt(el.value);
+//         document.getElementById(listOfSliderLabel[index]).textContent =
+//             el.value;
+//         main(inputObject, projection, transformArray)
+//     };
+//     el.oninput();
+// });
+
+

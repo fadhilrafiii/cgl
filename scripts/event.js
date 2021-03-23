@@ -8,38 +8,6 @@ function getStarted() {
     window.location.href = "#help";
 }
 
-const listOfSliderLabel = [
-    "x-rotate-label",
-    "y-rotate-label",
-    "z-rotate-label",
-    "scale-label",
-];
-
-// First -Third El for rotation, Fourth for scaling, Fifth-Sevent for translation 
-let transformArray = [0,0,0,0,0,0,0];
-
-// For slider (rotation and scaling) input
-document.querySelectorAll(".slider").forEach(function (el, index) {
-    el.oninput = function () {
-        var valPercent =
-            (el.valueAsNumber - parseInt(el.min)) /
-            (parseInt(el.max) - parseInt(el.min));
-        var style =
-            "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
-            valPercent +
-            ", #ffa500), color-stop(" +
-            valPercent +
-            ", #f5f6f8));";
-        el.style = style;
-        transformArray[index] = parseInt(el.value);
-        document.getElementById(listOfSliderLabel[index]).textContent =
-            el.value;
-    };
-    el.oninput();
-});
-
-
-
 // For translation input
 document.querySelectorAll(".translate").forEach(function (el, index) {
     el.oninput = function () {
@@ -120,3 +88,4 @@ const importFile = () => {
         };
     }
 };
+
