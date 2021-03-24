@@ -1,12 +1,14 @@
 
 function setGeometry(gl, shape) {
-  let positions = cubePositions;
-  if (shape == "cube") {
-    positions = cubePositions;
-  } else if (shape == "tetrahedron") {
-    positions = tetrahedronPositions;
+  let positions = [];
+  console.log(shape.shape);
+  if (shape.shape == "cube") {
+    positions = getCubePositions(shape.outer, shape.inner);
+  } else if (shape.shape == "tetrahedron") {
+    positions = getTetrahedronPositions();
+    console.log("asu")
   }
-  console.log(shape);
+  console.log(positions)
   // Center the F around the origin and Flip it around. We do this because
   // we're in 3D now with and +Y is up where as before when we started with 2D
   // we had +Y as down.
@@ -29,9 +31,9 @@ function setGeometry(gl, shape) {
   
   function setNormals(gl, shape) {
     let normals = cubeNormals;
-    if (shape == "cube") {
+    if (shape.shape == "cube") {
       normals = cubeNormals;
-    } else if (shape == "tetrahedron") {
+    } else if (shape.shape == "tetrahedron") {
       normals = tetrahedronNormals;
     }
     gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW);

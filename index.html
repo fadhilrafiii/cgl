@@ -56,28 +56,21 @@
                     <form class="new-form" name="newForm">
                         <div class="form-wrapper">
                             <div>
-                                <input onchange="main()" type="radio" id="cube" name="shape" value="cube" checked="checked" />
-                                <label for="square">Cube</label><br/>
-                                <input onchange="main()" type="radio" id="pyramid" name="shape" value="tetrahedron"/>
-                                <label for="polygon">Tetrahedron</label><br/>
-                                <input onchange="main()" type="radio" id="prism" name="shape" value="prism"/>
-                                <label for="line">Prism</label><br/><br/>
-
-                                <div class="coordinate">
-                                    <div class="input-container">
-                                        <label for="x">X:</label>
-                                        <input required type="text" class="draw-input mr coor" name="x">
-                                    </div>
-                                    <div class="input-container">
-                                        <label for="y">Y:</label>
-                                        <input required type="text" class="draw-input coor" name="y">
-                                    </div>
-                                </div>
-
+                                <input type="radio" id="cube" name="shape" value="cube"/>
+                                <label for="cube">Cube</label><br/>
+                                <input type="radio" id="tetrahedron" name="shape" value="tetrahedron"/>
+                                <label for="tetrahedron">Tetrahedron</label><br/>
+                                <input type="radio" id="prism" name="shape" value="prism"/>
+                                <label for="prism">Triangular Prism</label><br/><br/>
+                
                                 <div class="wrapper">
                                     <div class="input-container">
-                                        <label>Length:</label><br/>
-                                        <input required type="text" class="draw-input top" name="length">
+                                        <label>Length outer:</label><br/>
+                                        <input type="text" class="draw-input top" name="outer">
+                                    </div>
+                                    <div class="input-container">
+                                        <label>Length inner:</label><br/>
+                                        <input type="text" class="draw-input top" name="inner">
                                     </div>
                                     <div class="input-container">
                                         <label>Color:</label><br/>
@@ -98,92 +91,15 @@
                         </div>
                     </form>
                 </div>
-                <div class="toolbox">
-                    <form class="new-form" name="newForm">
-                        <div class="form-wrapper">
-                            <div class="left">
-                                <label for="x-rotate">Rotate-X:</label>
-                                <span id="x-rotate-label"></span><br/>
-                                <input
-                                    type="range"
-                                    id="x-rotate"
-                                    min="0"
-                                    max="100"
-                                    value="0"
-                                    step="0.01"
-                                    class="slider"
-                                    name="x-rotate">
-                                <label for="y-rotate">Rotate-Y:</label>
-                                <span id="y-rotate-label"></span><br/>
-                                <input
-                                    type="range"
-                                    id="y-rotate"
-                                    min="0"
-                                    max="100"
-                                    value="0"
-                                    step="0.01"
-                                    class="slider"
-                                    name="y-rotate">
-                                <label for="z-rotate">Rotate-Z:</label>
-                                <span id="z-rotate-label"></span><br/>
-                                <input
-                                    type="range"
-                                    id="z-rotate"
-                                    min="0"
-                                    max="100"
-                                    value="0"
-                                    step="0.01"
-                                    class="slider"
-                                    name="z-rotate">
-                                <label for="scale">Scale:</label>
-                                <span id="scale-label"></span><br/>
-                                <input
-                                    type="range"
-                                    id="scale"
-                                    min="0"
-                                    max="100"
-                                    value="0"
-                                    step="0.01"
-                                    class="slider"
-                                    name="z-rotate">
-                            </div>
-                            <div class="right">
-                                <label for="x-translate">Translate-X:</label><br/>
-                                <input
-                                    type="text"
-                                    id="x-translate"
-                                    name="x-translate"
-                                    value="0"
-                                    class="translate">
-                                <label for="y-translate">Translate-Y:</label><br/>
-                                <input
-                                    type="text"
-                                    id="y-translate"
-                                    name="y-translate"
-                                    value="0"
-                                    class="translate">
-                                <label for="z-translate">Translate-Z:</label><br/>
-                                <input
-                                    type="text"
-                                    id="z-translate"
-                                    name="z-translate"
-                                    value="0"
-                                    class="translate">
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-
-                <div class="toolbox">
+                <div class="toolbox middle">
                     <form class="new-form" name="newForm">
                         <div class="form-wrapper">
                             <div>
-                                <select name="projection" id="projection" class="projection-input" onchange="openSlider(this.value)">
+                                <select name="projection" id="projection" class="projection-input n-side" onchange="openSlider(this.value)">
                                     <option hidden>What Projection?</option>
-                                    <option value="perspective">Perspective</option>
-                                    <option value="oblique">Oblique</option>
-                                    <option value="orthogonal">Orthogonal</option>
+                                    <option value="perspective" onchange="openSlider(this.value)">Perspective</option>
+                                    <option value="oblique" onchange="openSlider(this.value)">Oblique</option>
+                                    <option value="orthographic" onchange="openSlider(this.value)">Orthographic</option>
                                 </select>
                                 <div id="perspective">
                                     <label for="fov">Field of View:</label>
@@ -191,9 +107,9 @@
                                     <input
                                         type="range"
                                         id="fov"
-                                        min="0"
-                                        max="100"
-                                        value="0"
+                                        min="5.0"
+                                        max="179"
+                                        value="70"
                                         step="0.01"
                                         class="slider"
                                         name="fov">
@@ -202,9 +118,9 @@
                                     <input
                                         type="range"
                                         id="znear"
-                                        min="0"
-                                        max="100"
-                                        value="0"
+                                        min="0.1"
+                                        max="10.0"
+                                        value="0.1"
                                         step="0.01"
                                         class="slider"
                                         name="znear">
@@ -213,9 +129,9 @@
                                     <input
                                         type="range"
                                         id="zfar"
-                                        min="0"
-                                        max="100"
-                                        value="0"
+                                        min="2"
+                                        max="20"
+                                        value="20"
                                         step="0.01"
                                         class="slider"
                                         name="zfar">
@@ -226,10 +142,10 @@
                                     <input
                                         type="range"
                                         id="left"
-                                        min="0"
-                                        max="100"
-                                        value="0"
-                                        step="0.01"
+                                        min="-600"
+                                        max="600"
+                                        value="-600"
+                                        step="1"
                                         class="slider"
                                         name="left">
                                     <label for="right">Right:</label>
@@ -237,10 +153,10 @@
                                     <input
                                         type="range"
                                         id="right"
-                                        min="0"
-                                        max="100"
-                                        value="0"
-                                        step="0.01"
+                                        min="-600"
+                                        max="600"
+                                        value="600"
+                                        step="1"
                                         class="slider"
                                         name="right">
                                     <label for="bottom">Bottom:</label>
@@ -248,10 +164,10 @@
                                     <input
                                         type="range"
                                         id="bottom"
-                                        min="0"
-                                        max="100"
-                                        value="0"
-                                        step="0.01"
+                                        min="-600"
+                                        max="600"
+                                        value="-400"
+                                        step="1"
                                         class="slider"
                                         name="bottom">
                                     <label for="top">Top:</label>
@@ -259,10 +175,10 @@
                                     <input
                                         type="range"
                                         id="top"
-                                        min="0"
-                                        max="100"
-                                        value="0"
-                                        step="0.01"
+                                        min="-500"
+                                        max="500"
+                                        value="500"
+                                        step="1"
                                         class="slider"
                                         name="top">
                                     <label for="near">Near:</label>
@@ -270,10 +186,10 @@
                                     <input
                                         type="range"
                                         id="near"
-                                        min="0"
-                                        max="100"
-                                        value="0"
-                                        step="0.01"
+                                        min="-600"
+                                        max="600"
+                                        value="1"
+                                        step="1"
                                         class="slider"
                                         name="near">
                                     <label for="far">Far:</label>
@@ -281,10 +197,10 @@
                                     <input
                                         type="range"
                                         id="far"
-                                        min="0"
-                                        max="100"
-                                        value="0"
-                                        step="0.01"
+                                        min="-600"
+                                        max="600"
+                                        value="600"
+                                        step="1"
                                         class="slider"
                                         name="far">
                                 </div>
@@ -295,8 +211,8 @@
                                         type="range"
                                         id="tetha"
                                         min="0"
-                                        max="100"
-                                        value="0"
+                                        max="179"
+                                        value="100"
                                         step="0.01"
                                         class="slider"
                                         name="tetha">
@@ -306,17 +222,159 @@
                                         type="range"
                                         id="phi"
                                         min="0"
-                                        max="100"
-                                        value="0"
+                                        max="170"
+                                        value="60"
                                         step="0.01"
                                         class="slider"
                                         name="phi">
                                 </div>
                             </div>
-              
+                
                         </div>
                     </form>
                 </div>
+                <div class="toolbox middle">
+                    <form class="new-form" name="newForm">
+                        <div class="form-wrapper">
+                            <div>
+                                <label for="x-camera">Camera-X:</label>
+                                <span id="x-camera-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="x-camera"
+                                    min="0"
+                                    max="360"
+                                    value="0"
+                                    step="0.01"
+                                    class="camera-slider""
+                                    name="x-camera">
+                                <label for="y-camera">Camera-Y:</label>
+                                <span id="y-camera-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="y-camera"
+                                    min="0"
+                                    max="360"
+                                    value="0"
+                                    step="0.01"
+                                    class="camera-slider""
+                                    name="y-camera">
+                                <label for="z-camera">Camera-Z:</label>
+                                <span id="z-camera-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="z-camera"
+                                    min="0"
+                                    max="360"
+                                    value="0"
+                                    step="0.01"
+                                    class="camera-slider""
+                                    name="z-camera">
+                                <label for="zoom-camera">Zoom:</label>
+                                <span id="zoom-camera-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="zoom-camera"
+                                    min="1"
+                                    max="10"
+                                    value="5"
+                                    step="0.01"
+                                    class="camera-slider""
+                                    name="zoom-camera">
+                            </div>
+                        </div>
+                    </form>
+                
+                </div>
+                <div class="toolbox">
+                    <form class="new-form" name="newForm">
+                        <div class="form-wrapper">
+                            <div class="left">
+                                <label for="x-rotate">Rotate-X:</label>
+                                <span id="x-rotate-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="x-rotate"
+                                    min="0"
+                                    max="360"
+                                    value="0"
+                                    step="0.01"
+                                    class="transform-slider""
+                                    name="x-rotate">
+                                <label for="y-rotate">Rotate-Y:</label>
+                                <span id="y-rotate-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="y-rotate"
+                                    min="0"
+                                    max="360"
+                                    value="0"
+                                    step="0.01"
+                                    class="transform-slider""
+                                    name="y-rotate">
+                                <label for="z-rotate">Rotate-Z:</label>
+                                <span id="z-rotate-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="z-rotate"
+                                    min="0"
+                                    max="360"
+                                    value="0"
+                                    step="0.01"
+                                    class="transform-slider""
+                                    name="z-rotate">
+                                <label for="scale">Scale:</label>
+                                <span id="scale-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="scale"
+                                    min="1"
+                                    max="5"
+                                    value="3"
+                                    step="0.1"
+                                    class="transform-slider""
+                                    name="z-rotate">
+                            </div>
+                            <div class="right">
+                                <label for="x-translate">Translate-X:</label>
+                                <span id="x-translate-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="x-translate"
+                                    min="-500"
+                                    max="500"
+                                    value="0"
+                                    step="0.01"
+                                    class="transform-slider""
+                                    name="x-translate">
+                                <label for="y-translate">Translate-Y:</label>
+                                <span id="y-translate-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="y-translate"
+                                    min="-500"
+                                    max="500"
+                                    value="0"
+                                    step="0.01"
+                                    class="transform-slider""
+                                    name="y-translate">
+                                <label for="z-translate">Translate-Z:</label>
+                                <span id="z-translate-label"></span><br/>
+                                <input
+                                    type="range"
+                                    id="z-translate"
+                                    min="-500"
+                                    max="500"
+                                    value="0"
+                                    step="0.01"
+                                    class="transform-slider""
+                                    name="z-translate">
+                                </div>
+                        </div>
+                    </form>
+                
+                </div>
+                
             </div>
 
         </div>
@@ -328,20 +386,19 @@
     </div>
 </body>
 <script  id="vertex-shader-3d" type="x-shader/x-vertex">
-    attribute vec4 a_position;
+    attribute vec4 a_Position;
     attribute vec3 a_normal;
     
     uniform mat4 u_worldViewProjection;
     uniform mat4 u_worldInverseTranspose;
-    
+
     varying vec3 v_normal;
     
     void main() {
-      // Multiply the position by the matrix.
-      gl_Position = u_worldViewProjection * a_position;
+        gl_Position = u_worldViewProjection * a_Position;
     
-      // orient the normals and pass to the fragment shader
-      v_normal = mat3(u_worldInverseTranspose) * a_normal;
+        // orient the normals and pass to the fragment shader
+        v_normal = mat3(u_worldInverseTranspose) * a_normal;
     }
     </script>
     <!-- fragment shader -->
@@ -370,14 +427,15 @@
     }
     </script>
 
+<script src="scripts/shader.js"></script>
 <script src="scripts/cube.js"></script>
 <script src="scripts/tetrahedron.js"></script>
-<script src="scripts/input.js"></script>
-<script src="scripts/shader.js"></script>
-<script src="scripts/draw.js"></script>
 <script src="scripts/matrix.js"></script>
-<script src="scripts/projection.js"></script>
+<script src="scripts/draw.js"></script>
 <script src="scripts/main.js"></script>
 <script src="scripts/event.js"></script>
+<script src="scripts/input.js"></script>
+
+
 
 </html>

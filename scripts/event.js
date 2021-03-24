@@ -8,37 +8,6 @@ function getStarted() {
     window.location.href = "#help";
 }
 
-const listOfSliderLabel = [
-    "x-rotate-label",
-    "y-rotate-label",
-    "z-rotate-label",
-    "scale-label",
-];
-
-// First -Third El for rotation, Fourth for scaling, Fifth-Sevent for translation 
-let transformArray = [0,0,0,0,0,0,0];
-
-// For slider (rotation and scaling) input
-document.querySelectorAll(".slider").forEach(function (el, index) {
-    el.oninput = function () {
-        let valPercent =
-            (el.valueAsNumber - parseInt(el.min)) /
-            (parseInt(el.max) - parseInt(el.min));
-        let style =
-            "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
-            valPercent +
-            ", #ffa500), color-stop(" +
-            valPercent +
-            ", #f5f6f8));";
-        el.style = style;
-        transformArray[index] = parseInt(el.value);
-        main();
-    };
-    el.oninput();
-});
-
-
-
 // For translation input
 document.querySelectorAll(".translate").forEach(function (el, index) {
     el.oninput = function () {
@@ -120,27 +89,3 @@ const importFile = () => {
     }
 };
 
-let obliqueInput = document.getElementById("oblique");
-let perspectiveInput = document.getElementById("perspective");
-let orthoInput = document.getElementById("orthographic")
-
-const openSlider = e => {
-
-    if (e === "perspective") {
-        perspectiveInput.style.display = "block";
-        obliqueInput.style.display = "none";
-        orthoInput.style.display = "none";
-    } else if (e === "orthogonal") {
-        perspectiveInput.style.display = "none";
-        obliqueInput.style.display = "none";
-        orthoInput.style.display = "block";
-    } else if (e === "oblique") {
-        perspectiveInput.style.display = "none";
-        obliqueInput.style.display = "block";
-        orthoInput.style.display = "block";
-    } else {
-        perspectiveInput.style.display = "none";
-        obliqueInput.style.display = "none";
-        orthoInput.style.display = "none";
-    }
-}

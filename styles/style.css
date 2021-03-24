@@ -2,6 +2,22 @@ html {
   scroll-behavior: smooth;
 }
 
+div::-webkit-scrollbar {
+  width: 10px;
+  /* width of the entire scrollbar */
+}
+
+div::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background-color: rgba(191, 191, 191, 0.8);
+  /* color of the scroll thumb */
+  border-radius: 20px;
+}
+
 h1,
 h2,
 h3,
@@ -271,6 +287,13 @@ nav .hamburger:hover .hamburger-btn:hover {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  flex-flow: row wrap;
+}
+.main .draw .container .middle-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: row wrap;
 }
 @media (max-width: 1024px) {
   .main .draw .container {
@@ -287,6 +310,12 @@ nav .hamburger:hover .hamburger-btn:hover {
   text-align: left;
   position: relative;
   min-width: 300px;
+<<<<<<< HEAD
+  max-width: 420px;
+  height: 370px;
+  overflow-y: auto;
+=======
+>>>>>>> master
 }
 @media (max-width: 768px) {
   .main .draw .container .toolbox {
@@ -361,6 +390,8 @@ nav .hamburger:hover .hamburger-btn:hover {
   border-radius: 4px;
   color: #5f3d9a;
   font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 10px;
 }
 .main .draw .container #fileName {
   display: block;
@@ -406,6 +437,12 @@ nav .hamburger:hover .hamburger-btn:hover {
   background-image: linear-gradient(-45deg, #2883ab, #a580e8);
   filter: blur(20px);
   z-index: -20;
+}
+
+.toolbox.middle {
+  min-width: 200px !important;
+  display: flex;
+  flex-direction: column;
 }
 
 .footer {
@@ -510,7 +547,10 @@ input[type=file] {
   }
 }
 .form-wrapper span {
-  position: absolute;
+  float: right;
+  margin-left: auto;
+  font-size: 12px;
+  top: 3px;
   right: 0;
   color: white;
 }
