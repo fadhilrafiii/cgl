@@ -13,15 +13,12 @@ document.querySelectorAll(".translate").forEach(function (el, index) {
     el.oninput = function () {
         let length = el.value.length;
         if (parseInt(el.value)) {
-            console.log(parseInt(el.value))
             transformArray[4+index] = parseInt(el.value);
         }
 
         if (!parseInt(el.value[length-1])) {
             transformArray[4+index] = 0;
         }
-        
-        console.log(transformArray);
     };
     el.oninput();
 });
@@ -81,8 +78,6 @@ const importFile = () => {
     let { files } = file;
     let [uploaded] = files;
 
-    console.log(files, uploaded);
-
     if (files) {
         let fileNameEl = document.getElementById("fileName");
         fileNameEl.textContent = `${uploaded.name} is uploaded!`;
@@ -92,7 +87,6 @@ const importFile = () => {
 
         reader.onload = function (e) {
             inputObject = JSON.parse(e.target.result);
-            console.log(inputObject);
             main(inputObject, projection, transformArray, cameraArray)
         };
 

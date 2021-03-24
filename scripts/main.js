@@ -107,7 +107,6 @@ function main(input, projection, transform, cameraArr) {
         );
         
         var projectionMatrix;
-        console.log(projection.element)
         
         if (projection.type == 'perspective') {
             let fieldOfViewRadians = degToRad(projection.element[0]);

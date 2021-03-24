@@ -309,7 +309,6 @@ var m4 = {
         let dst = new Float32Array(16);
         let f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians);
         let rangeInv = 1.0 / (near - far);
-        console.log(far)
         dst[ 0] = f / aspect;
         dst[ 1] = 0;
         dst[ 2] = 0;

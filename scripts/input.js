@@ -147,6 +147,7 @@ document.querySelectorAll(".transform-slider").forEach(function (el, index) {
         transformArray[index] = parseInt(el.value);
         document.getElementById(listOfSliderLabel[index]).textContent =
             el.value;
+        console.log(el.defaultValue)
         main(inputObject, projection, transformArray, cameraArray)
     };
     el.oninput();
@@ -193,5 +194,48 @@ document.querySelectorAll(".slider").forEach(function (el, index) {
     el.oninput();
 });
 
+let resetBtn = document.querySelector("#reset-btn");
 
+const reset = () => {
+    let allInput = document.querySelectorAll("input");
 
+    allInput = Array.prototype.slice.call(allInput)
+    allInput = [...allInput.slice(0,11), ...allInput.slice(18,29)]
+
+    console.log(allInput)
+
+    allInput.forEach((item, index) => {
+        item.value = item.defaultValue;
+        var valPercent =
+            (item.valueAsNumber - parseFloat(item.min)) /
+            (parseFloat(item.max) - parseFloat(item.min));
+        var style =
+            "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
+            valPercent +
+            ", #ffa500), color-stop(" +
+            valPercent +
+            ", #f5f6f8));";
+        item.style = style;
+        
+        if (index >= 0  && index < 4) {
+            cameraArray[index] = item.value;
+            cameraSliderLabel[index] = item.value;
+        }
+
+        if (index >= 4  && index < 11) {
+            transformArray[index-4] = item.value;
+            listOfSliderLabel[index-4] = item.value
+        }
+
+        if (index >= 11  && index < 22) {
+            projection.element[index-11] = item.value
+            projectionSliderLabel[index-11] = item.value
+        }
+
+        console.log(item.value)
+    })
+
+    main(inputObject, projection, transformArray, cameraArray);
+}
+
+resetBtn.addEventListener("click", reset)

@@ -93,7 +93,7 @@
                 </div>
                 <div class="container right-container">
                     <div class="toolbox middle">
-                        <form class="new-form" name="newForm">
+                        <form class="new-form" name="newForm" id="camera">
                             <div class="form-wrapper">
                                 <div>
                                     <label for="x-camera">Camera-X:</label>
@@ -146,7 +146,7 @@
                     
                     </div>
                     <div class="toolbox">
-                        <form class="new-form" name="newForm">
+                        <form class="new-form" name="newForm" id="tranform">
                             <div class="form-wrapper">
                                 <div class="left">
                                     <label for="x-rotate">Rotate-X:</label>
@@ -275,7 +275,7 @@
                     </form>
                 </div>
                 <div class="toolbox middle">
-                    <form class="new-form" name="newForm">
+                    <form class="new-form" name="newForm" id="projectionForm">
                         <div class="form-wrapper">
                             <div>
                                 <select name="projection" id="projection" class="projection-input n-side" onchange="openSlider(this.value)">
@@ -414,6 +414,9 @@
                             </div>
                         </div>
                     </form>
+                    <div class="reset-btn">
+                        <button id="reset-btn" onclick="reset()">Reset Button</button>
+                    </div>
                 </div>
             </div>
 

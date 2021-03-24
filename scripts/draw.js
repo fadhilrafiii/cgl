@@ -1,7 +1,6 @@
 
 function setGeometry(gl, shape) {
   let positions = [];
-  console.log(shape.shape);
   if (shape.shape == "cube") {
     positions = getCubePositions(shape.outer, shape.inner);
   } else if (shape.shape == "tetrahedron") {
@@ -9,7 +8,6 @@ function setGeometry(gl, shape) {
   } else if (shape.shape == "octahedron") {
     positions = getOctahedronPositions();
   }
-  console.log(positions)
   
   let matrix = m4.xRotation(Math.PI);
   matrix = m4.translate(matrix, -50, -75, -15);
