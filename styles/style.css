@@ -295,6 +295,11 @@ nav .hamburger:hover .hamburger-btn:hover {
   align-items: flex-start;
   flex-flow: row wrap;
 }
+@media (max-width: 1024px) {
+  .main .draw .container {
+    flex-flow: row wrap;
+  }
+}
 .main .draw .container .toolbox {
   box-sizing: border-box;
   background: linear-gradient(-15deg, #2883ab, #a580e8);
@@ -305,9 +310,12 @@ nav .hamburger:hover .hamburger-btn:hover {
   text-align: left;
   position: relative;
   min-width: 300px;
+<<<<<<< HEAD
   max-width: 420px;
   height: 370px;
   overflow-y: auto;
+=======
+>>>>>>> master
 }
 @media (max-width: 768px) {
   .main .draw .container .toolbox {
@@ -530,6 +538,8 @@ input[type=file] {
 .form-wrapper {
   display: flex;
   align-items: flex-start;
+  position: relative;
+  width: 100%;
 }
 @media (max-width: 1024px) {
   .form-wrapper {
@@ -580,6 +590,29 @@ input[type=range]::-webkit-slider-thumb {
   cursor: -moz-grab;
   cursor: -webkit-grab;
   border: solid 2px white;
+}
+
+.projection-input {
+  width: 100%;
+  background: white;
+  padding: 8px;
+  border-radius: 4px;
+  color: #5f3d9a;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1024px) {
+  .left, .right {
+    width: 100% !important;
+  }
+  .left input[type=range], .right input[type=range] {
+    width: 100%;
+  }
+}
+#perspective, #orthographic, #oblique {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */

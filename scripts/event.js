@@ -8,6 +8,40 @@ function getStarted() {
     window.location.href = "#help";
 }
 
+<<<<<<< HEAD
+=======
+const listOfSliderLabel = [
+    "x-rotate-label",
+    "y-rotate-label",
+    "z-rotate-label",
+    "scale-label",
+];
+
+// First -Third El for rotation, Fourth for scaling, Fifth-Sevent for translation 
+let transformArray = [0,0,0,0,0,0,0];
+
+// For slider (rotation and scaling) input
+document.querySelectorAll(".slider").forEach(function (el, index) {
+    el.oninput = function () {
+        let valPercent =
+            (el.valueAsNumber - parseInt(el.min)) /
+            (parseInt(el.max) - parseInt(el.min));
+        let style =
+            "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
+            valPercent +
+            ", #ffa500), color-stop(" +
+            valPercent +
+            ", #f5f6f8));";
+        el.style = style;
+        transformArray[index] = parseInt(el.value);
+        main();
+    };
+    el.oninput();
+});
+
+
+
+>>>>>>> master
 // For translation input
 document.querySelectorAll(".translate").forEach(function (el, index) {
     el.oninput = function () {
@@ -26,9 +60,9 @@ document.querySelectorAll(".translate").forEach(function (el, index) {
     el.oninput();
 });
 
-var prevScrollpos = window.pageYOffset;
+let prevScrollpos = window.pageYOffset;
 window.onscroll = function () {
-    var currentScrollPos = window.pageYOffset;
+    let currentScrollPos = window.pageYOffset;
     if (prevScrollpos > currentScrollPos) {
         document.getElementById("navbar").style.top = "0";
     } else {
@@ -50,7 +84,7 @@ const promptToSave = async () => {
 };
 
 function hexToRgb(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
         ? {
               r: parseInt(result[1], 16) / 255,
@@ -72,7 +106,7 @@ const importFile = () => {
         let fileNameEl = document.getElementById("fileName");
         fileNameEl.textContent = `${uploaded.name} is uploaded!`;
 
-        var reader = new FileReader();
+        let reader = new FileReader();
         reader.readAsText(uploaded, "UTF-8");
 
         reader.onload = function (e) {

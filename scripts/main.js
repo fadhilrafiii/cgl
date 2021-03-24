@@ -2,19 +2,18 @@
 
 function main(input, projection, transform, cameraArr) {
     /** @type {HTMLCanvasElement} */
-    var canvas = document.querySelector("#canvas");
-    var gl = canvas.getContext("webgl");
+    const canvas = document.querySelector("#canvas");
+    const gl = canvas.getContext("webgl");
     if (!gl) {
         return;
     }
 
     const vsSource = document.getElementById("vertex-shader-3d").text;
     const fsSource = document.getElementById("fragment-shader-3d").text;
-
     const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
     const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
 
-    var program = createProgram(gl, vertexShader, fragmentShader);
+    let program = createProgram(gl, vertexShader, fragmentShader);
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -25,41 +24,37 @@ function main(input, projection, transform, cameraArr) {
     var normalLocation = gl.getAttribLocation(program, "a_normal");
 
     // lookup uniforms
-    var worldViewProjectionLocation = gl.getUniformLocation(
+    
+    let worldViewProjectionLocation = gl.getUniformLocation(
         program,
         "u_worldViewProjection"
     );
-    var worldInverseTransposeLocation = gl.getUniformLocation(
+    let worldInverseTransposeLocation = gl.getUniformLocation(
         program,
         "u_worldInverseTranspose"
     );
-    var colorLocation = gl.getUniformLocation(program, "u_color");
-    var reverseLightDirectionLocation = gl.getUniformLocation(
+    
+    let colorLocation = gl.getUniformLocation(program, "u_color");
+    let reverseLightDirectionLocation = gl.getUniformLocation(
         program,
         "u_reverseLightDirection"
     );
 
     var positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-
-    if (input.shape === "cube") {
-        setCubeVertices(gl, input.outer, input.inner);
-    }
+    
+    setGeometry(gl, input);
 
     var normalBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
 
-    if (input.shape === "cube") {
-        setCubeNormals(gl);
-    }
+    setNormals(gl, input);
 
-    function radToDeg(r) {
-        return (r * 180) / Math.PI;
-    }
+    // var fRotationRadians = degToRad(0);
+    let scale = [1, 1, 1];
+    let translation = [0, 0, 0];
+    let rotation = [degToRad(0), degToRad(0), degToRad(0)]
 
-    function degToRad(d) {
-        return (d * Math.PI) / 180;
-    }
 
     var fieldOfViewRadians = degToRad(70);
     var scale = transform[3];
@@ -71,7 +66,9 @@ function main(input, projection, transform, cameraArr) {
         degToRad(transform[2]),
     ];
 
-    drawScene();
+    gl.useProgram(program);
+    gl.enableVertexAttribArray(positionLocation);
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
     function drawScene() {
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);

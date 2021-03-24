@@ -56,7 +56,7 @@
                     <form class="new-form" name="newForm">
                         <div class="form-wrapper">
                             <div>
-                                <input type="radio" id="cube" name="shape" value="cube"/>
+                                <input onchange="main()" type="radio" id="cube" name="shape" value="cube" checked="checked" />
                                 <label for="square">Cube</label><br/>
                                 <input type="radio" id="pyramid" name="shape" value="pyramid"/>
                                 <label for="pyramid">Tetrahedron</label><br/>
@@ -430,6 +430,7 @@
 <script src="scripts/shader.js"></script>
 <script src="scripts/cube.js"></script>
 <script src="scripts/matrix.js"></script>
+<script src="scripts/projection.js"></script>
 <script src="scripts/main.js"></script>
 <script src="scripts/event.js"></script>
 <script src="scripts/input.js"></script>
