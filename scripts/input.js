@@ -49,24 +49,24 @@ let transformArray = [
 ];
 
 let cameraArray = [
-    parseInt(document.getElementById("x-camera").value),
-    parseInt(document.getElementById("y-camera").value),
-    parseInt(document.getElementById("z-camera").value),
-    parseInt(document.getElementById("zoom-camera").value)
+    parseFloat(document.getElementById("x-camera").value),
+    parseFloat(document.getElementById("y-camera").value),
+    parseFloat(document.getElementById("z-camera").value),
+    parseFloat(document.getElementById("zoom-camera").value)
 ]
 
 let projectionArray = [
-    parseInt(document.getElementById("fov").value),
-    parseInt(document.getElementById("znear").value),
-    parseInt(document.getElementById("zfar").value),
-    parseInt(document.getElementById("left").value),
-    parseInt(document.getElementById("right").value),
-    parseInt(document.getElementById("bottom").value),
-    parseInt(document.getElementById("top").value),
-    parseInt(document.getElementById("near").value),
-    parseInt(document.getElementById("far").value),
-    parseInt(document.getElementById("tetha").value),
-    parseInt(document.getElementById("phi").value)
+    parseFloat(document.getElementById("fov").value),
+    parseFloat(document.getElementById("znear").value),
+    parseFloat(document.getElementById("zfar").value),
+    parseFloat(document.getElementById("left").value),
+    parseFloat(document.getElementById("right").value),
+    parseFloat(document.getElementById("bottom").value),
+    parseFloat(document.getElementById("top").value),
+    parseFloat(document.getElementById("near").value),
+    parseFloat(document.getElementById("far").value),
+    parseFloat(document.getElementById("tetha").value),
+    parseFloat(document.getElementById("phi").value)
 ]
 
 let projection = {
@@ -97,7 +97,7 @@ const submitForm = e => {
             inputObject[key] = hexToRgb(value)
         }
         else {
-            inputObject[key] = parseInt(value);
+            inputObject[key] = parseFloat(value);
         }
     }
 
@@ -135,8 +135,8 @@ function openSlider(e){
 document.querySelectorAll(".transform-slider").forEach(function (el, index) {
     el.oninput = function () {
         var valPercent =
-            (el.valueAsNumber - parseInt(el.min)) /
-            (parseInt(el.max) - parseInt(el.min));
+            (el.valueAsNumber - parseFloat(el.min)) /
+            (parseFloat(el.max) - parseFloat(el.min));
         var style =
             "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
             valPercent +
@@ -144,7 +144,7 @@ document.querySelectorAll(".transform-slider").forEach(function (el, index) {
             valPercent +
             ", #f5f6f8));";
         el.style = style;
-        transformArray[index] = parseInt(el.value);
+        transformArray[index] = parseFloat(el.value);
         document.getElementById(listOfSliderLabel[index]).textContent =
             el.value;
         console.log(el.defaultValue)
@@ -156,8 +156,8 @@ document.querySelectorAll(".transform-slider").forEach(function (el, index) {
 document.querySelectorAll(".camera-slider").forEach(function (el, index) {
     el.oninput = function () {
         var valPercent =
-            (el.valueAsNumber - parseInt(el.min)) /
-            (parseInt(el.max) - parseInt(el.min));
+            (el.valueAsNumber - parseFloat(el.min)) /
+            (parseFloat(el.max) - parseFloat(el.min));
         var style =
             "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
             valPercent +
@@ -165,7 +165,7 @@ document.querySelectorAll(".camera-slider").forEach(function (el, index) {
             valPercent +
             ", #f5f6f8));";
         el.style = style;
-        cameraArray[index] = parseInt(el.value);
+        cameraArray[index] = parseFloat(el.value);
         document.getElementById(cameraSliderLabel[index]).textContent =
             el.value;
         main(inputObject, projection, transformArray, cameraArray)
