@@ -248,7 +248,7 @@ resetBtn.addEventListener("click", reset)
 
 
 function toggleShader(e) {
-    e.value = e.checked ? true : false;
+    e.value = e.checked ? 1 : 0;
     shader = e.value;
     console.log(shader)
     main(inputObject, projection, transformArray, cameraArray, shader);

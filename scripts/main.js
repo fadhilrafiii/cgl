@@ -1,6 +1,7 @@
 "use strict";
 
 function main(input, projection, transform, cameraArr, shader) {
+    console.log(shader)
     /** @type {HTMLCanvasElement} */
     const canvas = document.querySelector("#canvas");
     const gl = canvas.getContext("webgl");
@@ -198,7 +199,8 @@ function main(input, projection, transform, cameraArr, shader) {
             gl.uniform4fv(colorLocation, [1, 0, 0, 1]);
         }
 
-        if (shader) {
+        if (shader == 1) {
+            console.log("masuk")
             gl.uniform3fv(
                 reverseLightDirectionLocation,
                 m4.normalize([1, 1, 1])
