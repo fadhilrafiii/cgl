@@ -289,7 +289,7 @@ function getOctahedronPositions() {
         0.0, 0.0, -84.0,
         84.0, 0.0, 0.0,
         67.99998, -7.999980000000001, -7.999980000000001
-    )];
+    ]);
 }
 
     var octahedronNormals = new Float32Array([
