@@ -277,7 +277,7 @@
                 <div class="toolbox middle">
                     <form class="new-form" name="newForm" id="projectionForm">
                         <div class="form-wrapper">
-                            <div>
+                            <div class="width">
                                 <select name="projection" id="projection" class="projection-input n-side" onchange="openSlider(this.value)">
                                     <option hidden>What Projection?</option>
                                     <option value="perspective" onchange="openSlider(this.value)">Perspective</option>
@@ -414,6 +414,11 @@
                             </div>
                         </div>
                     </form>
+                    <h5 style="text-align: center;">Toggle Shading</h5>
+                    <label class="switch">
+                        <input class="toggle" type="checkbox" onchange="toggleShader(this)">
+                        <span class="sliders round"></span>
+                    </label>
                     <div class="btn-container">
                         <button id="reset-btn" onclick="reset()">Reset Button</button>
                     </div>

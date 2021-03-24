@@ -1,6 +1,6 @@
 "use strict";
 
-function main(input, projection, transform, cameraArr) {
+function main(input, projection, transform, cameraArr, shader) {
     /** @type {HTMLCanvasElement} */
     const canvas = document.querySelector("#canvas");
     const gl = canvas.getContext("webgl");
@@ -198,10 +198,12 @@ function main(input, projection, transform, cameraArr) {
             gl.uniform4fv(colorLocation, [1, 0, 0, 1]);
         }
 
-        gl.uniform3fv(
-            reverseLightDirectionLocation,
-            m4.normalize([0.5, 0.7, 1])
-        );
+        if (shader) {
+            gl.uniform3fv(
+                reverseLightDirectionLocation,
+                m4.normalize([1, 1, 1])
+            );
+        }
 
         // Draw the geometry.
         var primitiveType = gl.TRIANGLES;

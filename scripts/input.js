@@ -31,7 +31,9 @@ const projectionSliderLabel = [
 
 let obliqueInput = document.getElementById("oblique");
 let perspectiveInput = document.getElementById("perspective");
-let orthoInput = document.getElementById("orthographic")
+let orthoInput = document.getElementById("orthographic");
+let shadow = document.getElementById("shadow");
+
 
 perspectiveInput.style.display = "none";
 obliqueInput.style.display = "none";
@@ -74,6 +76,8 @@ let projection = {
     element: projectionArray
 }
 
+let shader = false;
+
 let inputObject = {};
 
 const form = document.querySelector("#drawForm");
@@ -101,7 +105,7 @@ const submitForm = e => {
         }
     }
 
-    main(inputObject, projection, transformArray, cameraArray)
+    main(inputObject, projection, transformArray, cameraArray, shader)
 }
 
 function openSlider(e){
@@ -126,7 +130,7 @@ function openSlider(e){
 
     projection.type = e
 
-    main(inputObject, projection, transformArray, cameraArray);
+    main(inputObject, projection, transformArray, cameraArray, shader);
 }
 
 
@@ -148,7 +152,7 @@ document.querySelectorAll(".transform-slider").forEach(function (el, index) {
         document.getElementById(listOfSliderLabel[index]).textContent =
             el.value;
         console.log(el.defaultValue)
-        main(inputObject, projection, transformArray, cameraArray)
+        main(inputObject, projection, transformArray, cameraArray, shader)
     };
     el.oninput();
 });
@@ -168,7 +172,7 @@ document.querySelectorAll(".camera-slider").forEach(function (el, index) {
         cameraArray[index] = parseFloat(el.value);
         document.getElementById(cameraSliderLabel[index]).textContent =
             el.value;
-        main(inputObject, projection, transformArray, cameraArray)
+        main(inputObject, projection, transformArray, cameraArray, shader)
     };
     el.oninput();
 });
@@ -189,7 +193,7 @@ document.querySelectorAll(".slider").forEach(function (el, index) {
         document.getElementById(projectionSliderLabel[index]).textContent =
             el.value;
         projection.element = projectionArray;
-        main(inputObject, projection, transformArray, cameraArray)
+        main(inputObject, projection, transformArray, cameraArray, shader)
     };
     el.oninput();
 });
@@ -237,7 +241,16 @@ const reset = () => {
     console.log(cameraArray)
     console.log(transformArray)
     console.log(projectionArray)
-    main(inputObject, projection, transformArray, cameraArray);
+    main(inputObject, projection, transformArray, cameraArray, shader);
 }
 
 resetBtn.addEventListener("click", reset)
+
+
+function toggleShader(e) {
+    e.value = e.checked ? true : false;
+    shader = e.value;
+    console.log(shader)
+    main(inputObject, projection, transformArray, cameraArray, shader);
+
+}
