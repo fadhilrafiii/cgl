@@ -298,8 +298,8 @@ nav {
     .draw {
         text-align: center;
         padding-bottom: 80px;
-        padding-left: 5%;
-        padding-right: 5%;
+        padding-left: 10px;
+        padding-right: 10px;
 
         h1 {
             color: #5f3d9a;
@@ -308,7 +308,7 @@ nav {
         .container {
             margin-bottom: 80px;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: flex-start;
             flex-flow: row wrap;
 
@@ -334,12 +334,9 @@ nav {
                 text-align: left;
                 position: relative;
                 min-width: 300px;
-<<<<<<< HEAD
                 max-width: 420px;
-                height: 370px;
+                max-height: 370px;
                 overflow-y: auto;
-=======
->>>>>>> master
 
                 @media (max-width: 768px) {
                     width: 100%;
@@ -685,4 +682,39 @@ input[type="range"]::-webkit-slider-thumb {
 
 #perspective, #orthographic, #oblique {
     display: none;
+}
+
+.flexbox{
+    display: flex;
+    // flex-flow: row wrap;
+}
+
+.right-container {
+    margin-bottom: 10px !important;
+    display: flex;
+    flex-direction: column !important;
+    
+    .toolbox {
+        min-width: 200px !important;
+        width: 25vw !important;
+
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+
+            div {
+                width: 100%;
+            }
+
+            .left, .right {
+                width: 80% !important;
+            }
+
+            input {
+                position: relative;
+                display: block;
+                width: 100%;
+            }
+        }
+    }
 }

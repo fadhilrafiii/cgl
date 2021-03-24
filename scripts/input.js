@@ -76,7 +76,7 @@ let projection = {
 
 let inputObject = {};
 
-const form = document.querySelector("form");
+const form = document.querySelector("#drawForm");
 
 form.addEventListener("submit", e => submitForm(e))
 
@@ -125,7 +125,6 @@ function openSlider(e){
     }
 
     projection.type = e
-    projection.element = []
 
     main(inputObject, projection, transformArray, cameraArray);
 }
