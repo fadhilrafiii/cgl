@@ -278,21 +278,26 @@ var m4 = {
     },
 
     orthographic: function(left, right, bottom, top, near, far) {
-        // Each of the parameters represents the plane of the bounding box
-        let lr = 1 / (left - right);
-        let bt = 1 / (bottom - top);
-        let nf = 1 / (near - far);
-            
-        let row4col1 = (left + right) * lr;
-        let row4col2 = (top + bottom) * bt;
-        let row4col3 = (far + near) * nf;
-        
-        return [
-            -2 * lr,        0,        0, 0,
-                0,  -2 * bt,        0, 0,
-                0,        0,   2 * nf, 0,
-            row4col1, row4col2, row4col3, 1
-        ];
+        dst = new Float32Array(16);
+
+        dst[ 0] = 2 / (right - left);
+        dst[ 1] = 0;
+        dst[ 2] = 0;
+        dst[ 3] = 0;
+        dst[ 4] = 0;
+        dst[ 5] = 2 / (top - bottom);
+        dst[ 6] = 0;
+        dst[ 7] = 0;
+        dst[ 8] = 0;
+        dst[ 9] = 0;
+        dst[10] = 2 / (near - far);
+        dst[11] = 0;
+        dst[12] = (left + right) / (left - right);
+        dst[13] = (bottom + top) / (bottom - top);
+        dst[14] = (near + far) / (near - far);
+        dst[15] = 1;
+
+        return dst;
     },
 
     perspective: function perspective(
@@ -304,17 +309,17 @@ var m4 = {
         let dst = new Float32Array(16);
         let f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians);
         let rangeInv = 1.0 / (near - far);
-
-        dst[0] = f / aspect;
-        dst[1] = 0;
-        dst[2] = 0;
-        dst[3] = 0;
-        dst[4] = 0;
-        dst[5] = f;
-        dst[6] = 0;
-        dst[7] = 0;
-        dst[8] = 0;
-        dst[9] = 0;
+        console.log(far)
+        dst[ 0] = f / aspect;
+        dst[ 1] = 0;
+        dst[ 2] = 0;
+        dst[ 3] = 0;
+        dst[ 4] = 0;
+        dst[ 5] = f;
+        dst[ 6] = 0;
+        dst[ 7] = 0;
+        dst[ 8] = 0;
+        dst[ 9] = 0;
         dst[10] = (near + far) * rangeInv;
         dst[11] = -1;
         dst[12] = 0;

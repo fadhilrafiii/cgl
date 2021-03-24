@@ -64,6 +64,7 @@ function main(input, projection, transform, cameraArr) {
     gl.enableVertexAttribArray(positionLocation);
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
+    drawScene();
     function drawScene() {
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -106,12 +107,14 @@ function main(input, projection, transform, cameraArr) {
         );
         
         var projectionMatrix;
-
+        console.log(projection.element)
+        
         if (projection.type == 'perspective') {
-            let fieldOfViewRadians = projection.element[0];
+            let fieldOfViewRadians = degToRad(projection.element[0]);
             let aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
             let zNear = projection.element[1];
-            let zFar = projection.element[2];
+            // let zFar = projection.element[2];
+            let zFar = 0;
             projectionMatrix = m4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
         } else if (projection.type == 'orthographic') {
             let left = projection.element[3];

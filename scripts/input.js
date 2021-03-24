@@ -110,7 +110,7 @@ function openSlider(e){
         perspectiveInput.style.display = "block";
         obliqueInput.style.display = "none";
         orthoInput.style.display = "none";
-    } else if (e === "orthogonal") {
+    } else if (e === "orthographic") {
         perspectiveInput.style.display = "none";
         obliqueInput.style.display = "none";
         orthoInput.style.display = "block";
@@ -176,8 +176,8 @@ document.querySelectorAll(".camera-slider").forEach(function (el, index) {
 document.querySelectorAll(".slider").forEach(function (el, index) {
     el.oninput = function () {
         var valPercent =
-            (el.valueAsNumber - parseInt(el.min)) /
-            (parseInt(el.max) - parseInt(el.min));
+            (el.valueAsNumber - parseFloat(el.min)) /
+            (parseFloat(el.max) - parseFloat(el.min));
         var style =
             "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
             valPercent +
@@ -185,7 +185,7 @@ document.querySelectorAll(".slider").forEach(function (el, index) {
             valPercent +
             ", #f5f6f8));";
         el.style = style;
-        projectionArray[index] = parseInt(el.value);
+        projectionArray[index] = parseFloat(el.value);
         document.getElementById(projectionSliderLabel[index]).textContent =
             el.value;
         projection.element = projectionArray;
