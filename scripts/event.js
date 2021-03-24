@@ -60,7 +60,7 @@ const promptToSave = async () => {
 
     if (fileName) {
         let file = `${fileName}.json`;
-        await saveData(inputData, file);
+        await saveData(inputObject, file);
     }
 };
 
@@ -91,11 +91,9 @@ const importFile = () => {
         reader.readAsText(uploaded, "UTF-8");
 
         reader.onload = function (e) {
-            let uploadedObj = JSON.parse(e.target.result);
-            console.log(uploadedObj);
-
-            uploadedObj.forEach((item) => inputData.push(item));
-            main(inputData);
+            inputObject = JSON.parse(e.target.result);
+            console.log(inputObject);
+            main(inputObject, projection, transformArray, cameraArray)
         };
 
         reader.onerror = function (e) {
