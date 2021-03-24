@@ -6,6 +6,8 @@ function setGeometry(gl, shape) {
     positions = getCubePositions(shape.outer, shape.inner);
   } else if (shape.shape == "tetrahedron") {
     positions = getTetrahedronPositions();
+  } else if (shape.shape == "octahedron") {
+    positions = getOctahedronPositions();
   }
   console.log(positions)
   
@@ -28,6 +30,8 @@ function setGeometry(gl, shape) {
       normals = cubeNormals;
     } else if (shape.shape == "tetrahedron") {
       normals = tetrahedronNormals;
+    } else if (shape.shape == "octahedron") {
+      normals = octahedronNormals;
     }
     gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW);
   }
