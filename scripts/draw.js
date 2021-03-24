@@ -6,16 +6,9 @@ function setGeometry(gl, shape) {
     positions = getCubePositions(shape.outer, shape.inner);
   } else if (shape.shape == "tetrahedron") {
     positions = getTetrahedronPositions();
-    console.log("asu")
   }
   console.log(positions)
-  // Center the F around the origin and Flip it around. We do this because
-  // we're in 3D now with and +Y is up where as before when we started with 2D
-  // we had +Y as down.
-
-  // We could do by changing all the values above but I'm lazy.
-  // We could also do it with a matrix at draw time but you should
-  // never do stuff at draw time if you can do it at init time.
+  
   let matrix = m4.xRotation(Math.PI);
   matrix = m4.translate(matrix, -50, -75, -15);
 

@@ -114,7 +114,7 @@ function main(input, projection, transform, cameraArr) {
             let aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
             let zNear = projection.element[1];
             // let zFar = projection.element[2];
-            let zFar = 0;
+            let zFar = 2000;
             projectionMatrix = m4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
         } else if (projection.type == 'orthographic') {
             let left = projection.element[3];

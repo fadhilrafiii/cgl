@@ -276,8 +276,8 @@ nav .hamburger:hover .hamburger-btn:hover {
 .main .draw {
   text-align: center;
   padding-bottom: 80px;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .main .draw h1 {
   color: #5f3d9a;
@@ -285,7 +285,7 @@ nav .hamburger:hover .hamburger-btn:hover {
 .main .draw .container {
   margin-bottom: 80px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   flex-flow: row wrap;
 }
@@ -310,12 +310,9 @@ nav .hamburger:hover .hamburger-btn:hover {
   text-align: left;
   position: relative;
   min-width: 300px;
-<<<<<<< HEAD
   max-width: 420px;
-  height: 370px;
+  max-height: 370px;
   overflow-y: auto;
-=======
->>>>>>> master
 }
 @media (max-width: 768px) {
   .main .draw .container .toolbox {
@@ -613,6 +610,35 @@ input[type=range]::-webkit-slider-thumb {
 }
 #perspective, #orthographic, #oblique {
   display: none;
+}
+
+.flexbox {
+  display: flex;
+}
+
+.right-container {
+  margin-bottom: 10px !important;
+  display: flex;
+  flex-direction: column !important;
+}
+.right-container .toolbox {
+  min-width: 200px !important;
+  width: 25vw !important;
+}
+.right-container .toolbox .form-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.right-container .toolbox .form-wrapper div {
+  width: 100%;
+}
+.right-container .toolbox .form-wrapper .left, .right-container .toolbox .form-wrapper .right {
+  width: 80% !important;
+}
+.right-container .toolbox .form-wrapper input {
+  position: relative;
+  display: block;
+  width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */
