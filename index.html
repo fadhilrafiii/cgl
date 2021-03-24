@@ -43,7 +43,47 @@
         </div>
         <div class="help tab" id="help">
             <h1>Tutorial</h1>
-            <div class="tutorial-container"></div>
+            <div class="tutorial-container">
+                <div class="tutor">
+                    <h3>Menggambar model hollow</h3>
+                    <ol>
+                        <li>Menuju ke seksi "DRAW" (klik <button class="demo ds">DRAW SHAPES</button>)</li>
+                        <li>Pilih model yang ingin digambar</li>
+                        <li>Masukkan panjang sisi luar dan dalam (untuk cube)</li>
+                        <li>Tentukan warna yang ingin dipilih</li>
+                        <li>Tekan <button class="demo">Draw Item</button></li>
+                    </ol>
+                </div>
+                <div class="tutor">
+                    <h3>Mengubah proyeksi model</h3>
+                    <ol>
+                        <li>Pastikan model sudah digambar (default: perspective)</li>
+                        <li>Pilih proyeksi 
+                            <select name="projection" id="projection" class="projection-input demo n-side" onchange="openSlider(this.value)">
+                                <option hidden>What Projection?</option>
+                                <option value="perspective" onchange="openSlider(this.value)">Perspective</option>
+                                <option value="oblique" onchange="openSlider(this.value)">Oblique</option>
+                                <option value="orthographic" onchange="openSlider(this.value)">Orthographic</option>
+                            </select>
+                        </li>
+                        <li>Atur parameter</li>
+                    </ol>
+                </div>
+                <div class="tutor">
+                    <h3>Transformasi model dan camera</h3>
+                    <ol>
+                        <li>Pastikan model sudah digambar</li>
+                        <li>Atur parameter camera atau transformasi objek</li>
+                    </ol>
+                </div>
+                <div class="tutor">
+                    <h3>Mereset model ke posisi awal</h3>
+                    <ol>
+                        <li>Setelah mentransformasi kamera atau model</li>
+                        <li>Reset model dengan mengklik <button class="demo">Reset Model</button></li>
+                    </ol>
+                </div>
+            </div>
         </div>
         <div class="draw tab" id="draw">
             <h1>Start Drawing</h1>
