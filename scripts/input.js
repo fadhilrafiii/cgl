@@ -205,7 +205,7 @@ const reset = () => {
     console.log(allInput)
 
     allInput.forEach((item, index) => {
-        item.value = item.defaultValue;
+        item.value = parseFloat(item.defaultValue);
         var valPercent =
             (item.valueAsNumber - parseFloat(item.min)) /
             (parseFloat(item.max) - parseFloat(item.min));
@@ -218,23 +218,25 @@ const reset = () => {
         item.style = style;
         
         if (index >= 0  && index < 4) {
-            cameraArray[index] = item.value;
-            cameraSliderLabel[index] = item.value;
+            cameraArray[index] = parseFloat(item.value);
+            document.getElementById(cameraSliderLabel[index]).textContent = parseFloat(item.value);
         }
 
         if (index >= 4  && index < 11) {
-            transformArray[index-4] = item.value;
-            listOfSliderLabel[index-4] = item.value
+            transformArray[index-4] = parseFloat(item.value);
+            document.getElementById(listOfSliderLabel[index-4]).textContent = parseFloat(item.value);
         }
 
         if (index >= 11  && index < 22) {
-            projection.element[index-11] = item.value
-            projectionSliderLabel[index-11] = item.value
+            projection.element[index-11] = parseFloat(item.value);
+            document.getElementById(projectionSliderLabel[index-11]).textContent = parseFloat(item.value);
         }
 
         console.log(item.value)
     })
-
+    console.log(cameraArray)
+    console.log(transformArray)
+    console.log(projectionArray)
     main(inputObject, projection, transformArray, cameraArray);
 }
 
