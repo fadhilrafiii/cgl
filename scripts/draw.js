@@ -1,12 +1,13 @@
 
 function setGeometry(gl, shape) {
-  let positions = cubePositions;
+  let positions = [];
   if (shape.shape == "cube") {
     positions = getCubePositions(shape.outer, shape.inner);
+    console.log(positions);
+    console.log(shape.outer);
   } else if (shape.shape == "tetrahedron") {
     positions = tetrahedronPositions;
   }
-  console.log(shape.shape);
   // Center the F around the origin and Flip it around. We do this because
   // we're in 3D now with and +Y is up where as before when we started with 2D
   // we had +Y as down.

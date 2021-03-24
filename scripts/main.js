@@ -50,13 +50,7 @@ function main(input, projection, transform, cameraArr) {
 
     setNormals(gl, input);
 
-    // var fRotationRadians = degToRad(0);
-    let scale = [1, 1, 1];
-    let translation = [0, 0, 0];
-    let rotation = [degToRad(0), degToRad(0), degToRad(0)]
-
-
-    var fieldOfViewRadians = degToRad(70);
+    
     var scale = transform[3];
     var translation = [transform[4], transform[5], transform[6]];
     translation = translation.map((item) => -1 * parseInt(item));
@@ -110,16 +104,36 @@ function main(input, projection, transform, cameraArr) {
             stride,
             offset
         );
+        
+        var projectionMatrix;
 
-        var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-        var zNear = 1;
-        var zFar = 2000;
-        var projectionMatrix = m4.perspective(
-            fieldOfViewRadians,
-            aspect,
-            zNear,
-            zFar
-        );
+        if (projection.type == 'perspective') {
+            let fieldOfViewRadians = projection.element[0];
+            let aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+            let zNear = projection.element[1];
+            let zFar = projection.element[2];
+            projectionMatrix = m4.perspective(fieldOfViewRadians, aspect, zNear, zFar);
+        } else if (projection.type == 'orthographic') {
+            let left = projection.element[3];
+            let right = projection.element[4];
+            let bottom = projection.element[5];
+            let top = projection.element[6];
+            let near = projection.element[7];
+            let far = projection.element[8];
+            projectionMatrix = m4.orthographic(left, right, bottom, top, near, far);
+        } else {
+            let left = projection.element[3];
+            let right = projection.element[4];
+            let bottom = projection.element[5];
+            let top = projection.element[6];
+            let near = projection.element[7];
+            let far = projection.element[8];
+            let theta = projection.element[9];
+            let phi = projection.element[10];
+            let oblique = m4.oblique(theta, phi);
+            let ortho = m4.orthographic(left, right, bottom, top, near, far);
+            projectionMatrix = m4.multiply(oblique, ortho);
+        }
 
         projectionMatrix = m4.scale(projectionMatrix, scale, scale, 1);
 

@@ -15,6 +15,20 @@ const cameraSliderLabel = [
     "zoom-camera-label"
 ]
 
+const projectionSliderLabel = [
+    "fov-label",
+    "znear-label",
+    "zfar-label",
+    "left-label",
+    "right-label",
+    "bottom-label",
+    "top-label",
+    "near-label",
+    "far-label",
+    "tetha-label",
+    "phi-label"
+]
+
 let obliqueInput = document.getElementById("oblique");
 let perspectiveInput = document.getElementById("perspective");
 let orthoInput = document.getElementById("orthographic")
@@ -41,12 +55,23 @@ let cameraArray = [
     parseInt(document.getElementById("zoom-camera").value)
 ]
 
-console.log(cameraArray)
-
+let projectionArray = [
+    parseInt(document.getElementById("fov").value),
+    parseInt(document.getElementById("znear").value),
+    parseInt(document.getElementById("zfar").value),
+    parseInt(document.getElementById("left").value),
+    parseInt(document.getElementById("right").value),
+    parseInt(document.getElementById("bottom").value),
+    parseInt(document.getElementById("top").value),
+    parseInt(document.getElementById("near").value),
+    parseInt(document.getElementById("far").value),
+    parseInt(document.getElementById("tetha").value),
+    parseInt(document.getElementById("phi").value)
+]
 
 let projection = {
     type: "perspective",
-    element: []
+    element: projectionArray
 }
 
 let inputObject = {};
@@ -102,7 +127,7 @@ function openSlider(e){
     projection.type = e
     projection.element = []
 
-    console.log(projection)
+    main(inputObject, projection, transformArray, cameraArray);
 }
 
 
@@ -148,6 +173,26 @@ document.querySelectorAll(".camera-slider").forEach(function (el, index) {
     el.oninput();
 });
 
+document.querySelectorAll(".slider").forEach(function (el, index) {
+    el.oninput = function () {
+        var valPercent =
+            (el.valueAsNumber - parseInt(el.min)) /
+            (parseInt(el.max) - parseInt(el.min));
+        var style =
+            "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(" +
+            valPercent +
+            ", #ffa500), color-stop(" +
+            valPercent +
+            ", #f5f6f8));";
+        el.style = style;
+        projectionArray[index] = parseInt(el.value);
+        document.getElementById(projectionSliderLabel[index]).textContent =
+            el.value;
+        projection.element = projectionArray;
+        main(inputObject, projection, transformArray, cameraArray)
+    };
+    el.oninput();
+});
 
 
 
