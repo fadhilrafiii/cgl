@@ -151,7 +151,6 @@ document.querySelectorAll(".transform-slider").forEach(function (el, index) {
         transformArray[index] = parseFloat(el.value);
         document.getElementById(listOfSliderLabel[index]).textContent =
             el.value;
-        console.log(el.defaultValue)
         main(inputObject, projection, transformArray, cameraArray, shader)
     };
     el.oninput();
@@ -206,8 +205,6 @@ const reset = () => {
     allInput = Array.prototype.slice.call(allInput)
     allInput = [...allInput.slice(0,11), ...allInput.slice(18,29)]
 
-    console.log(allInput)
-
     allInput.forEach((item, index) => {
         item.value = parseFloat(item.defaultValue);
         var valPercent =
@@ -235,12 +232,7 @@ const reset = () => {
             projection.element[index-11] = parseFloat(item.value);
             document.getElementById(projectionSliderLabel[index-11]).textContent = parseFloat(item.value);
         }
-
-        console.log(item.value)
     })
-    console.log(cameraArray)
-    console.log(transformArray)
-    console.log(projectionArray)
     main(inputObject, projection, transformArray, cameraArray, shader);
 }
 
@@ -250,7 +242,6 @@ resetBtn.addEventListener("click", reset)
 function toggleShader(e) {
     e.value = e.checked ? 1 : 0;
     shader = e.value;
-    console.log(shader)
     main(inputObject, projection, transformArray, cameraArray, shader);
 
 }
